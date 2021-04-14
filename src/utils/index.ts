@@ -1,3 +1,3 @@
-import authProvider from "./authProvider";
+import userProvider from "./userProvider";
 
-export { authProvider };
+export { userProvider };

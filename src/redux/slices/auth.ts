@@ -1,5 +1,5 @@
 import { createSlice, Dispatch } from "@reduxjs/toolkit";
-import { authProvider } from "../../utils";
+import { userProvider } from "../../utils";
 import { persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 
@@ -34,11 +34,13 @@ export function login(email: string, password: string) {
   return (dispatch: Dispatch<any>) => {
     try {
       dispatch(slice.actions.showLoading());
-      const result = authProvider.login(email, password);
-      dispatch(slice.actions.hideLoading());
-      dispatch(slice.actions.setSession());
+      const result: any = userProvider.get(email);
 
-      return result;
+      if (result.password === password) {
+        dispatch(slice.actions.hideLoading());
+        dispatch(slice.actions.setSession());
+        return result;
+      }
     } catch (e) {
       dispatch(slice.actions.hideLoading());
       return null;
