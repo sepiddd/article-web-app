@@ -1,4 +1,4 @@
-import { Input, Button, Form } from "antd";
+import { Input, Button, Form, notification } from "antd";
 import { useHistory } from "react-router";
 import { useAuth } from "../../hooks";
 
@@ -26,8 +26,13 @@ const Login = () => {
     try {
       login(values.email, values.password);
       history.push("/list");
+      notification["success"]({
+        message: "You're logged in successfully.",
+      });
     } catch {
-      // show error message
+      notification["error"]({
+        message: "An error occured",
+      });
     }
   };
 
