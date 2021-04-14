@@ -1,5 +1,5 @@
 const List = () => {
-  return <div style={{ padding: 100, backgroundColor: "pink" }}>List</div>;
+  return <div>List</div>;
 };
 
 export default List;
