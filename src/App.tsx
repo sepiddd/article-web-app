@@ -14,8 +14,14 @@ import { Fragment, lazy, Suspense } from "react";
 import { AuthGuard, Loading } from "./components";
 import { PATH_APP, PATH_AUTH } from "./routes/paths";
 import Layout from "./Layout";
+import { DataAccess } from "./utils/DataAccess";
+import { User } from "./types";
 
 const queryClient = new QueryClient();
+
+const userAccess = new DataAccess<User>("store", "users");
+
+console.log("userAccess", userAccess);
 
 const routes = [
   {
@@ -76,7 +82,6 @@ function renderRoutes(routes: Array<any> = []) {
               render={(props: RouteProps) => (
                 <Guard>
                   <Layout>
-                    {console.log("route.routes", route.routes)}
                     {route.routes ? (
                       renderRoutes(route.routes)
                     ) : (
