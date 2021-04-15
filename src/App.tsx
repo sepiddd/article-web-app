@@ -21,8 +21,6 @@ const queryClient = new QueryClient();
 
 const userAccess = new DataAccess<User>("store", "users");
 
-console.log("userAccess", userAccess);
-
 const routes = [
   {
     exact: true,

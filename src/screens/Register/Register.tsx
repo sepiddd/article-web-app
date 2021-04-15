@@ -1,4 +1,16 @@
-import { Input, Button, Form } from "antd";
+import { Input, Button, Form, notification } from "antd";
+import { useHistory } from "react-router";
+import { useAuth } from "../../hooks";
+import { User } from "../../types";
+import { Controller, useForm } from "react-hook-form";
+// import * as yup from "yup";
+
+// const schema = yup.object().shape({
+//   firstname: yup.string().required().min(3).max(50),
+//   lastname: yup.string().required().min(3).max(50),
+//   email: yup.string().email().required(),
+//   password: yup.string().required().min(8),
+// });
 
 const layout = {
   labelCol: { span: 8 },
@@ -9,41 +21,119 @@ const tailLayout = {
 };
 
 const Register = () => {
-  const onFinish = (values: any) => {
-    console.log("Success:", values);
-  };
+  const { loading, register } = useAuth();
+  const history = useHistory();
 
-  const onFinishFailed = (errorInfo: any) => {
-    console.log("Failed:", errorInfo);
+  const { control, handleSubmit } = useForm();
+
+  const onSubmit = (data: User) => {
+    if (loading) {
+      return;
+    }
+    try {
+      register(data);
+      console.log("errors", data);
+      history.push("/list");
+      notification["success"]({
+        message: "You're Profile create successfully.",
+      });
+    } catch {
+      notification["error"]({
+        message: "An error occured",
+      });
+    }
   };
 
   return (
-    <Form
-      {...layout}
-      name='basic'
-      initialValues={{ remember: true }}
-      onFinish={onFinish}
-      onFinishFailed={onFinishFailed}>
-      <Form.Item
-        label='First Name'
+    <Form {...layout} name='register' onFinish={handleSubmit(onSubmit)}>
+      <Controller
+        render={({ field }) => {
+          return (
+            <Form.Item
+              name={field.name}
+              label='First Name'
+              rules={[
+                { required: true, message: "Please input your firstname!" },
+                { min: 3, message: "min length!" },
+                { max: 50, message: "max length!" },
+              ]}>
+              <Input
+                onChange={field.onChange}
+                value={field.value}
+                onBlur={field.onBlur}
+              />
+            </Form.Item>
+          );
+        }}
         name='firstname'
-        rules={[{ required: true, message: "Please input your username!" }]}>
-        <Input />
-      </Form.Item>
+        control={control}
+      />
 
-      <Form.Item
-        label='Username'
-        name='username'
-        rules={[{ required: true, message: "Please input your username!" }]}>
-        <Input />
-      </Form.Item>
+      <Controller
+        render={({ field }) => (
+          <Form.Item
+            name={field.name}
+            label='Last Name'
+            rules={[
+              { required: true, message: "Please input your lastname!" },
+              { min: 3, message: "min length!" },
+              { max: 50, message: "max length!" },
+            ]}>
+            <Input
+              onChange={field.onChange}
+              value={field.value}
+              onBlur={field.onBlur}
+            />
+          </Form.Item>
+        )}
+        name='lastname'
+        control={control}
+      />
 
-      <Form.Item
-        label='Password'
+      <Controller
+        render={({ field }) => {
+          return (
+            <Form.Item
+              name={field.name}
+              label='Email Address'
+              rules={[
+                { required: true, message: "Please input your email!" },
+                {
+                  pattern: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                  message: "your email address is not  valid",
+                },
+              ]}>
+              <Input
+                onChange={field.onChange}
+                value={field.value}
+                onBlur={field.onBlur}
+              />
+            </Form.Item>
+          );
+        }}
+        name='email'
+        control={control}
+      />
+
+      <Controller
+        render={({ field }) => (
+          <Form.Item
+            name={field.name}
+            label='Password'
+            rules={[
+              { required: true, message: "Please input your password!" },
+              { min: 8, message: "Please input your password!" },
+            ]}>
+            <Input.Password
+              onChange={field.onChange}
+              value={field.value}
+              onBlur={field.onBlur}
+            />
+          </Form.Item>
+        )}
         name='password'
-        rules={[{ required: true, message: "Please input your password!" }]}>
-        <Input.Password />
-      </Form.Item>
+        control={control}
+      />
 
       <Form.Item {...tailLayout}>
         <Button type='primary' htmlType='submit'>

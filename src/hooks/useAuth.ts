@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../redux/rootReducer";
-import { login } from "../redux/slices/auth";
+import { login, register } from "../redux/slices/auth";
+import { User } from "../types";
 
 function useAuth() {
   const dispatch = useDispatch();
@@ -10,6 +11,9 @@ function useAuth() {
     ...auth,
     login: (email: string, password: string) => {
       dispatch(login(email, password));
+    },
+    register: (data: User) => {
+      dispatch(register(data));
     },
   };
 }

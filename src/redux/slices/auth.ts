@@ -2,6 +2,7 @@ import { createSlice, Dispatch } from "@reduxjs/toolkit";
 import { userProvider } from "../../utils";
 import { persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
+import { User } from "../../types";
 
 const initialState: {
   isAuthenticated: boolean;
@@ -41,6 +42,22 @@ export function login(email: string, password: string) {
         dispatch(slice.actions.setSession());
         return result;
       }
+    } catch (e) {
+      dispatch(slice.actions.hideLoading());
+      return null;
+    }
+  };
+}
+
+export function register(data: User) {
+  return (dispatch: Dispatch<any>) => {
+    try {
+      dispatch(slice.actions.showLoading());
+      const result: any = userProvider.create(data);
+      dispatch(slice.actions.setSession());
+      console.log("result", result);
+
+      return result;
     } catch (e) {
       dispatch(slice.actions.hideLoading());
       return null;

@@ -1,6 +1,6 @@
 import { Input, Button, Form, notification } from "antd";
 import { useHistory } from "react-router";
-import { useForm } from "react-hook-form";
+// import { useForm } from "react-hook-form";
 
 import { useAuth } from "../../hooks";
 
@@ -41,7 +41,7 @@ const Login = () => {
   return (
     <Form
       {...layout}
-      name='basic'
+      name='login'
       initialValues={{ remember: true }}
       onFinish={handleSubmit}
       onFinishFailed={onFinishFailed}>
@@ -69,6 +69,3 @@ const Login = () => {
 };
 
 export default Login;
-function dispatch(arg0: any) {
-  throw new Error("Function not implemented.");
-}
