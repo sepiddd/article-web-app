@@ -14,12 +14,8 @@ import { Fragment, lazy, Suspense } from "react";
 import { AuthGuard, Loading } from "./components";
 import { PATH_APP, PATH_AUTH } from "./routes/paths";
 import Layout from "./Layout";
-import { DataAccess } from "./utils/DataAccess";
-import { User } from "./types";
 
 const queryClient = new QueryClient();
-
-const userAccess = new DataAccess<User>("store", "users");
 
 const routes = [
   {

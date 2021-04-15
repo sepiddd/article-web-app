@@ -48,12 +48,12 @@ export class DataAccess<T> implements IDataAccess<T> {
     return this.requestHandler(request);
   }
 
-  async get(uid: string) {
+  async get(email: string) {
     const db = await this.connection;
     const request = db
       .transaction([this.storeName], "readonly")
       .objectStore(this.storeName)
-      .get(uid);
+      .get(email);
 
     return this.requestHandler(request);
   }

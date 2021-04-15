@@ -3,6 +3,10 @@ import { userProvider } from "../../utils";
 import { persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import { User } from "../../types";
+import { DataAccess } from "../../utils/DataAccess";
+import { notification } from "antd";
+
+const userAccess = new DataAccess<User>("store", "users");
 
 const initialState: {
   isAuthenticated: boolean;
@@ -53,11 +57,18 @@ export function register(data: User) {
   return (dispatch: Dispatch<any>) => {
     try {
       dispatch(slice.actions.showLoading());
-      const result: any = userProvider.create(data);
-      dispatch(slice.actions.setSession());
-      console.log("result", result);
-
-      return result;
+      userAccess.get(data.email).then((res) => {
+        if (!!res) {
+          notification["error"]({
+            message: "user exist",
+          });
+          return false;
+        } else {
+          const result: any = userAccess.add(data);
+          dispatch(slice.actions.setSession());
+          return result;
+        }
+      });
     } catch (e) {
       dispatch(slice.actions.hideLoading());
       return null;

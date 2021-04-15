@@ -29,7 +29,7 @@ export class DBAccess {
       };
       request.onupgradeneeded = () => {
         this.db = request.result;
-        request.result.createObjectStore(storeName, { keyPath: "uid" });
+        request.result.createObjectStore(storeName, { keyPath: "email" });
         resolve(this.db);
       };
     });

@@ -32,7 +32,7 @@ const Register = () => {
     }
     try {
       register(data);
-      console.log("errors", data);
+
       history.push("/list");
       notification["success"]({
         message: "You're Profile create successfully.",
