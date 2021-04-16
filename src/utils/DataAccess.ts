@@ -4,8 +4,8 @@ import { IDataAccess } from "../types/IDataAccess";
 export class DataAccess<T> implements IDataAccess<T> {
   private connection: Promise<IDBDatabase>;
 
-  constructor(dbName: string, private storeName: string) {
-    this.connection = new DBAccess().instance.connect(dbName, storeName);
+  constructor(dbName: string, private storeName: string, key: string) {
+    this.connection = new DBAccess().instance.connect(dbName, storeName, key);
   }
 
   async add(item: T) {
@@ -48,12 +48,12 @@ export class DataAccess<T> implements IDataAccess<T> {
     return this.requestHandler(request);
   }
 
-  async get(email: string) {
+  async get(key: string) {
     const db = await this.connection;
     const request = db
       .transaction([this.storeName], "readonly")
       .objectStore(this.storeName)
-      .get(email);
+      .get(key);
 
     return this.requestHandler(request);
   }

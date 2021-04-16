@@ -7,7 +7,7 @@ export class DBAccess {
     this.db = undefined;
   }
 
-  async connect(dbName: string, storeName: string) {
+  async connect(dbName: string, storeName: string, key: string) {
     if (this.db) {
       return this.db;
     }
@@ -19,7 +19,7 @@ export class DBAccess {
       request.onerror = (error) => {
         attempts--;
         if (attempts) {
-          return this.connect(dbName, storeName);
+          return this.connect(dbName, storeName, key);
         }
         return reject(error);
       };
@@ -29,7 +29,7 @@ export class DBAccess {
       };
       request.onupgradeneeded = () => {
         this.db = request.result;
-        request.result.createObjectStore(storeName, { keyPath: "email" });
+        request.result.createObjectStore(storeName, { keyPath: key });
         resolve(this.db);
       };
     });

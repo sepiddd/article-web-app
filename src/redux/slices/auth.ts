@@ -5,7 +5,7 @@ import { User } from "../../types";
 import { DataAccess } from "../../utils/DataAccess";
 import { notification } from "antd";
 
-const userAccess = new DataAccess<User>("store", "users");
+const userAccess = new DataAccess<User>("store", "users", "email");
 
 const initialState: {
   isAuthenticated: boolean;
