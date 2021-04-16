@@ -3,6 +3,7 @@ import { useHistory } from "react-router";
 // import { useForm } from "react-hook-form";
 
 import { useAuth } from "../../hooks";
+import { PATH_APP } from "../../routes/paths";
 
 const layout = {
   labelCol: { span: 8 },
@@ -13,12 +14,13 @@ const tailLayout = {
 };
 
 const Login = () => {
-  const { loading, login } = useAuth();
+  const { loading, login, isAuthenticated } = useAuth();
+
   const history = useHistory();
 
-  const onFinishFailed = (errorInfo: any) => {
-    console.log("Failed:", errorInfo);
-  };
+  if (isAuthenticated) {
+    history.push(PATH_APP.list);
+  }
 
   const handleSubmit = (values: { email: string; password: string }) => {
     if (loading) {
@@ -28,9 +30,6 @@ const Login = () => {
     try {
       login(values.email, values.password);
       history.push("/list");
-      notification["success"]({
-        message: "You're logged in successfully.",
-      });
     } catch {
       notification["error"]({
         message: "An error occured",
@@ -43,8 +42,7 @@ const Login = () => {
       {...layout}
       name='login'
       initialValues={{ remember: true }}
-      onFinish={handleSubmit}
-      onFinishFailed={onFinishFailed}>
+      onFinish={handleSubmit}>
       <Form.Item
         label='Email'
         name='email'

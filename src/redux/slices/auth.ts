@@ -1,5 +1,4 @@
 import { createSlice, Dispatch } from "@reduxjs/toolkit";
-import { userProvider } from "../../utils";
 import { persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import { User } from "../../types";
@@ -39,13 +38,30 @@ export function login(email: string, password: string) {
   return (dispatch: Dispatch<any>) => {
     try {
       dispatch(slice.actions.showLoading());
-      const result: any = userProvider.get(email);
-
-      if (result.password === password) {
-        dispatch(slice.actions.hideLoading());
-        dispatch(slice.actions.setSession());
-        return result;
-      }
+      userAccess.get(email).then((res) => {
+        if (!!res) {
+          if (res.password === password) {
+            dispatch(slice.actions.hideLoading());
+            dispatch(slice.actions.setSession());
+            notification["success"]({
+              message: "You're logged in successfully.",
+            });
+            return res;
+          } else {
+            notification["error"]({
+              message: "Your password is wrong",
+            });
+            dispatch(slice.actions.hideLoading());
+            return null;
+          }
+        } else {
+          dispatch(slice.actions.hideLoading());
+          notification["error"]({
+            message: "user dose not exist",
+          });
+          return null;
+        }
+      });
     } catch (e) {
       dispatch(slice.actions.hideLoading());
       return null;
@@ -55,17 +71,22 @@ export function login(email: string, password: string) {
 
 export function register(data: User) {
   return (dispatch: Dispatch<any>) => {
+    dispatch(slice.actions.showLoading());
     try {
-      dispatch(slice.actions.showLoading());
       userAccess.get(data.email).then((res) => {
         if (!!res) {
           notification["error"]({
             message: "user exist",
           });
+          dispatch(slice.actions.hideLoading());
           return false;
         } else {
           const result: any = userAccess.add(data);
           dispatch(slice.actions.setSession());
+          dispatch(slice.actions.hideLoading());
+          notification["success"]({
+            message: "You're Profile create successfully.",
+          });
           return result;
         }
       });

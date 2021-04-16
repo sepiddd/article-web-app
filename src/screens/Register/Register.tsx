@@ -3,6 +3,7 @@ import { useHistory } from "react-router";
 import { useAuth } from "../../hooks";
 import { User } from "../../types";
 import { Controller, useForm } from "react-hook-form";
+// import { yupResolver } from "@hookform/resolvers/yup";
 // import * as yup from "yup";
 
 // const schema = yup.object().shape({
@@ -32,11 +33,7 @@ const Register = () => {
     }
     try {
       register(data);
-
       history.push("/list");
-      notification["success"]({
-        message: "You're Profile create successfully.",
-      });
     } catch {
       notification["error"]({
         message: "An error occured",
