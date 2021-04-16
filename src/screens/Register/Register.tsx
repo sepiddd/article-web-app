@@ -7,8 +7,8 @@ import { Controller, useForm } from "react-hook-form";
 // import * as yup from "yup";
 
 // const schema = yup.object().shape({
-//   firstname: yup.string().required().min(3).max(50),
-//   lastname: yup.string().required().min(3).max(50),
+//   firstName: yup.string().required().min(3).max(50),
+//   lastName: yup.string().required().min(3).max(50),
 //   email: yup.string().email().required(),
 //   password: yup.string().required().min(8),
 // });
@@ -62,7 +62,7 @@ const Register = () => {
             </Form.Item>
           );
         }}
-        name='firstname'
+        name='firstName'
         control={control}
       />
 
@@ -83,7 +83,7 @@ const Register = () => {
             />
           </Form.Item>
         )}
-        name='lastname'
+        name='lastName'
         control={control}
       />
 

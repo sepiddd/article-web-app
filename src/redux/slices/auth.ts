@@ -10,9 +10,11 @@ const userAccess = new DataAccess<User>("store", "users", "email");
 const initialState: {
   isAuthenticated: boolean;
   loading: boolean;
+  user: User;
 } = {
   isAuthenticated: false,
   loading: false,
+  user: { lastName: "", firstName: "", email: "", password: "" },
 };
 
 const slice = createSlice({
@@ -28,8 +30,9 @@ const slice = createSlice({
     hideLoading(state) {
       state.loading = false;
     },
-    setSession(state) {
+    setSession(state, action) {
       state.isAuthenticated = true;
+      state.user = { ...action.payload, password: "" };
     },
   },
 });
@@ -42,7 +45,8 @@ export function login(email: string, password: string) {
         if (!!res) {
           if (res.password === password) {
             dispatch(slice.actions.hideLoading());
-            dispatch(slice.actions.setSession());
+            dispatch(slice.actions.setSession(res));
+
             notification["success"]({
               message: "You're logged in successfully.",
             });
@@ -82,7 +86,7 @@ export function register(data: User) {
           return false;
         } else {
           const result: any = userAccess.add(data);
-          dispatch(slice.actions.setSession());
+          dispatch(slice.actions.setSession(data));
           dispatch(slice.actions.hideLoading());
           notification["success"]({
             message: "You're Profile create successfully.",
@@ -101,7 +105,7 @@ const persistConfig = {
   key: "auth",
   storage,
   keyPrefix: "redux-",
-  whitelist: ["isAuthenticated", "profile"],
+  whitelist: ["isAuthenticated", "user"],
 };
 
 const { reset, setSession } = slice.actions;
