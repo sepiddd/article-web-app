@@ -4,8 +4,9 @@ import storage from "redux-persist/lib/storage";
 import { User } from "../../types";
 import { DataAccess } from "../../utils/DataAccess";
 import { notification } from "antd";
+import { DB_CONNECTION } from "../../constants/db";
 
-const userAccess = new DataAccess<User>("store", "users", "email");
+const userAccess = new DataAccess<User>(DB_CONNECTION, "users");
 
 const initialState: {
   isAuthenticated: boolean;
