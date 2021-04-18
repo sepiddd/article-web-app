@@ -1,12 +1,10 @@
-import { DBAccess } from "./DBAccess";
 import { IDataAccess } from "../types/IDataAccess";
 
 export class DataAccess<T> implements IDataAccess<T> {
-  private connection: Promise<IDBDatabase>;
-
-  constructor(dbName: string, private storeName: string, key: string) {
-    this.connection = new DBAccess().instance.connect(dbName, storeName, key);
-  }
+  constructor(
+    private connection: Promise<IDBDatabase>,
+    private storeName: string
+  ) {}
 
   async add(item: T) {
     const db = await this.connection;
