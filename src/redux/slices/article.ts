@@ -7,7 +7,7 @@ import { IArticle } from "../../types";
 import { DataAccess } from "../../utils/DataAccess";
 
 const initialState: {
-  articlesList: Array<{ id: string; title: string; body: any; date: string }>;
+  articlesList: Array<IArticle>;
   loading: boolean;
 } = {
   articlesList: [],

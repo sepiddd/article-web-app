@@ -1,3 +1,4 @@
+import useArticle from "./useArticle";
 import useAuth from "./useAuth";
 
-export { useAuth };
+export { useAuth, useArticle };
