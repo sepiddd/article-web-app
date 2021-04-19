@@ -5,7 +5,6 @@ import { IArticleMode } from "../../types";
 
 const Article = () => {
   const location = useLocation();
-
   const { mode } = qs.parse(location.search);
 
   return (

@@ -1,3 +1,4 @@
 import userProvider from "./userProvider";
+import { validateImage } from "./validateImage";
 
-export { userProvider };
+export { userProvider, validateImage };

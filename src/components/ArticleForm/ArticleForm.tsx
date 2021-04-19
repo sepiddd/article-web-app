@@ -5,12 +5,13 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { ErrorMessage } from "@hookform/error-message";
 import { useArticle } from "../../hooks";
-import { DraftEditor } from "..";
+import { DraftEditor, ImageUpload } from "..";
 import { IArticleMode } from "../../types";
 
 const schema = yup.object().shape({
   title: yup.string().required().min(3).max(150),
   content: yup.string().required(),
+  image: yup.string(),
 });
 
 interface Props {
@@ -29,12 +30,19 @@ const ArticleForm: React.FC<Props> = ({ mode }: Props) => {
     resolver: yupResolver(schema),
   });
 
-  const onSubmit = async (data: { content: any; title: string }) => {
+  const onSubmit = async (data: {
+    content: any;
+    title: string;
+    image: string;
+  }) => {
+    console.log("data", data);
+
     try {
       await addArticle({
         title: data.title,
         content: data.content,
         date: new Date().toString(),
+        image: data.image,
       });
       reset();
     } catch (error) {}
@@ -86,6 +94,28 @@ const ArticleForm: React.FC<Props> = ({ mode }: Props) => {
         )}
       />
 
+      <Controller
+        name='image'
+        control={control}
+        defaultValue=''
+        render={({ field }) => {
+          return (
+            <Form.Item>
+              <ImageUpload
+                setBase64={field.onChange}
+                resetForm={isSubmitSuccessful}
+              />
+              <ErrorMessage
+                errors={errors}
+                name='image'
+                as={"p"}
+                className='error-message'
+              />
+            </Form.Item>
+          );
+        }}
+      />
+      <Form.Item></Form.Item>
       <Button htmlType='submit' type='primary'>
         Add article
       </Button>
