@@ -5,7 +5,7 @@ const { Header, Content } = AntLayout;
 
 const Layout = ({ children }: PropsWithChildren<unknown>) => {
   return (
-    <AntLayout>
+    <AntLayout style={{ minHeight: "100vh" }}>
       <Header style={{ position: "fixed", zIndex: 1, width: "100%" }}>
         This is header
       </Header>

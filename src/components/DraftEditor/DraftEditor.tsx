@@ -7,6 +7,7 @@ import {
 } from "draft-js";
 import "draft-js/dist/Draft.css";
 import { useEffect, useState } from "react";
+import { IArticleMode } from "../../types";
 
 import "./styles.scss";
 
@@ -14,7 +15,7 @@ const compositeDecorator = (isPreview: boolean) => new CompositeDecorator([]);
 
 interface Props {
   setContent?: (data: any) => void;
-  mode: "UPDATE" | "CREATE" | "READ";
+  mode: IArticleMode;
   text?: any;
   resetForm?: boolean;
 }
@@ -28,7 +29,7 @@ const DraftEditor: React.FC<Props> = ({
   const [editorState, setEditorState] = useState(() =>
     EditorState.createEmpty()
   );
-  const [isTextSet, setIsTextSet] = useState(mode === "CREATE");
+  const [isTextSet, setIsTextSet] = useState(mode === "create");
 
   useEffect(() => {
     const newState = !!text && convertFromRaw(JSON.parse(text));
@@ -36,7 +37,7 @@ const DraftEditor: React.FC<Props> = ({
       editorOnChange(
         EditorState.createWithContent(
           newState,
-          compositeDecorator(mode === "READ")
+          compositeDecorator(mode === "read")
         )
       );
       setIsTextSet(true);
@@ -52,7 +53,7 @@ const DraftEditor: React.FC<Props> = ({
 
     setContent?.(
       // convertToRaw(editorState.getCurrentContent()).blocks
-      currentEditorState.getCurrentContent().hasText() || mode === "UPDATE"
+      currentEditorState.getCurrentContent().hasText() || mode === "edit"
         ? JSON.stringify(convertToRaw(currentEditorState.getCurrentContent()))
         : undefined
     );

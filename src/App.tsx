@@ -30,12 +30,12 @@ const routes = [
     routes: [
       {
         exact: true,
-        path: "/auth/login",
+        path: PATH_AUTH.login,
         component: lazy(() => import("./screens/Login")),
       },
       {
         exact: true,
-        path: "/auth/register",
+        path: PATH_AUTH.register,
         component: lazy(() => import("./screens/Register")),
       },
     ],
@@ -50,6 +50,11 @@ const routes = [
         exact: true,
         path: PATH_APP.list,
         component: lazy(() => import("./screens/List")),
+      },
+      {
+        // exact: true,
+        path: PATH_APP.addArticle,
+        component: lazy(() => import("./screens/Article")),
       },
     ],
   },

@@ -1,15 +1,29 @@
-import { useAuth } from "../../hooks";
+import { Button } from "antd";
+import { useHistory } from "react-router";
+import { PATH_APP } from "../../routes/paths";
 
 const List = () => {
-  const { user } = useAuth();
-
+  const history = useHistory();
   return (
     <div>
-      <p>{user?.firstName}</p>
-      <p>{user?.lastName}</p>
-      <br />
-      <br />
-      List
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+        }}>
+        <h2>List</h2>
+        <Button
+          onClick={() =>
+            history.push({
+              pathname: PATH_APP.addArticle,
+              search: "?mode=create",
+            })
+          }
+          type='primary'>
+          Add Article
+        </Button>
+      </div>
     </div>
   );
 };

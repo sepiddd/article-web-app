@@ -4,3 +4,5 @@ export type IArticle = {
   date: string;
   id?: string;
 };
+
+export type IArticleMode = "create" | "edit" | "read";
