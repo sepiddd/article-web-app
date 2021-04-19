@@ -1,1 +1,6 @@
-export type IArticle = { title: string; body: any; date: string; id?: string };
+export type IArticle = {
+  title: string;
+  content: any;
+  date: string;
+  id?: string;
+};
