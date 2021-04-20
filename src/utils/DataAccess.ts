@@ -2,8 +2,8 @@ import { IDataAccess } from "../types/IDataAccess";
 
 export class DataAccess<T> implements IDataAccess<T> {
   constructor(
-    private connection: Promise<IDBDatabase>,
-    private storeName: string
+    protected connection: Promise<IDBDatabase>,
+    protected storeName: string
   ) {}
 
   async add(item: T) {
@@ -66,7 +66,7 @@ export class DataAccess<T> implements IDataAccess<T> {
     return this.requestHandler(request);
   }
 
-  private requestHandler(request: IDBRequest) {
+  protected requestHandler(request: IDBRequest) {
     return new Promise<T>((resolve, reject) => {
       request.onsuccess = () => resolve(request.result);
       request.onerror = () => reject(request.result);

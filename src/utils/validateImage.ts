@@ -1,8 +1,6 @@
 import { message } from "antd";
 
 export function validateImage(file: any) {
-  console.log(file);
-
   const invalidSizeMessage = "The image size should be less than 4MB.";
   const invalidTypeMessage = "The selected image format is invalid.";
   const size = 4;

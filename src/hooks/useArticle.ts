@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../redux/rootReducer";
-import { addArticle } from "../redux/slices/article";
+import { addArticle, getArticlesList } from "../redux/slices/article";
 import { IArticle } from "../types";
 
 function useArticle() {
@@ -13,6 +13,9 @@ function useArticle() {
     ...article,
     addArticle: async (data: IArticle) => {
       dispatch(await addArticle(data));
+    },
+    getArticlesList: async (id: string) => {
+      dispatch(await getArticlesList(id));
     },
   };
 }

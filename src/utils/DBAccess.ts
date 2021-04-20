@@ -29,11 +29,18 @@ export class DBAccess {
       };
       request.onupgradeneeded = () => {
         this.db = request.result;
-        request.result.createObjectStore("users", { keyPath: "email" });
-        request.result.createObjectStore("articles", {
-          keyPath: "id",
-          autoIncrement: true,
-        });
+        request.result
+          .createObjectStore("users", {
+            keyPath: "id",
+            autoIncrement: true,
+          })
+          .createIndex("u_idx", "email", { unique: true });
+        request.result
+          .createObjectStore("articles", {
+            keyPath: "id",
+            autoIncrement: true,
+          })
+          .createIndex("a_idx", "userId", { unique: false });
         resolve(this.db);
       };
     });

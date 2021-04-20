@@ -5,8 +5,9 @@ import { User } from "../../types";
 import { DataAccess } from "../../utils/DataAccess";
 import { notification } from "antd";
 import { DB_CONNECTION } from "../../constants/db";
+import { UserAccess } from "../../utils/UserAccess";
 
-const userAccess = new DataAccess<User>(DB_CONNECTION, "users");
+const userAccess = new UserAccess(DB_CONNECTION, "users");
 
 const initialState: {
   isAuthenticated: boolean;
@@ -15,7 +16,7 @@ const initialState: {
 } = {
   isAuthenticated: false,
   loading: false,
-  user: { lastName: "", firstName: "", email: "", password: "" },
+  user: { lastName: "", firstName: "", email: "", password: "", id: "" },
 };
 
 const slice = createSlice({
@@ -42,7 +43,7 @@ export function login(email: string, password: string) {
   return (dispatch: Dispatch<any>) => {
     try {
       dispatch(slice.actions.showLoading());
-      userAccess.get(email).then((res) => {
+      userAccess.getByEmail(email).then((res) => {
         if (!!res) {
           if (res.password === password) {
             dispatch(slice.actions.hideLoading());
@@ -78,7 +79,7 @@ export function register(data: User) {
   return (dispatch: Dispatch<any>) => {
     dispatch(slice.actions.showLoading());
     try {
-      userAccess.get(data.email).then((res) => {
+      userAccess.getByEmail(data.email).then((res) => {
         if (!!res) {
           notification["error"]({
             message: "user exist",
@@ -86,13 +87,15 @@ export function register(data: User) {
           dispatch(slice.actions.hideLoading());
           return false;
         } else {
-          const result: any = userAccess.add(data);
-          dispatch(slice.actions.setSession(data));
-          dispatch(slice.actions.hideLoading());
-          notification["success"]({
-            message: "You're Profile create successfully.",
+          userAccess.add(data).then((res) => {
+            dispatch(slice.actions.setSession({ ...data, id: res }));
+            dispatch(slice.actions.hideLoading());
+            notification["success"]({
+              message: "You're Profile create successfully.",
+            });
+
+            return res;
           });
-          return result;
         }
       });
     } catch (e) {

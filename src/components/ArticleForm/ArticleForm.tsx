@@ -4,9 +4,11 @@ import { Form } from "antd";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { ErrorMessage } from "@hookform/error-message";
-import { useArticle } from "../../hooks";
+import { useArticle, useAuth } from "../../hooks";
 import { DraftEditor, ImageUpload } from "..";
 import { IArticleMode } from "../../types";
+import { PATH_APP } from "../../routes/paths";
+import { useHistory } from "react-router";
 
 const schema = yup.object().shape({
   title: yup.string().required().min(3).max(150),
@@ -20,6 +22,8 @@ interface Props {
 
 const ArticleForm: React.FC<Props> = ({ mode }: Props) => {
   const { addArticle } = useArticle();
+  const { user } = useAuth();
+  const history = useHistory();
 
   const {
     control,
@@ -35,16 +39,17 @@ const ArticleForm: React.FC<Props> = ({ mode }: Props) => {
     title: string;
     image: string;
   }) => {
-    console.log("data", data);
-
     try {
       await addArticle({
         title: data.title,
         content: data.content,
-        date: new Date().toString(),
+        // date: new Date().toISOString().slice(0, 10),
+        date: new Date().toISOString().slice(0, 10),
         image: data.image,
+        userId: user.id,
       });
       reset();
+      history.push(PATH_APP.list);
     } catch (error) {}
   };
 
