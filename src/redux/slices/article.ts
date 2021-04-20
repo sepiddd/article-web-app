@@ -4,6 +4,7 @@ import { persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import { DB_CONNECTION } from "../../constants/db";
 import { IArticle } from "../../types";
+import { ArticleAccess } from "../../utils/ArticleAccess";
 import { DataAccess } from "../../utils/DataAccess";
 
 const initialState: {
@@ -14,20 +15,21 @@ const initialState: {
   loading: false,
 };
 
-const articleAccess = new DataAccess<IArticle>(DB_CONNECTION, "articles");
+const articleAccess = new ArticleAccess(DB_CONNECTION, "articles");
 
-const getArticles = async (email: string) => {
-  try {
-    const data = await articleAccess.get(email);
-
-    return data;
-  } catch {
-    notification["error"]({
-      message: "An error occured",
-    });
-  }
+const getArticlesList = async (id: string) => {
+  return async (dispatch: Dispatch<any>) => {
+    try {
+      const data = await articleAccess.getUserArticles(id);
+      dispatch(slice.actions.getList(data));
+      return data;
+    } catch {
+      notification["error"]({
+        message: "An error occured",
+      });
+    }
+  };
 };
-
 const slice = createSlice({
   name: "articles",
   initialState,
@@ -41,10 +43,14 @@ const slice = createSlice({
     reset() {
       return initialState;
     },
+    getList(state, action) {
+      state.articlesList = action.payload;
+      state.loading = false;
+    },
   },
 });
 
-export async function addArticle(data: IArticle) {
+const addArticle = async (data: IArticle) => {
   return (dispatch: Dispatch<any>) => {
     try {
       dispatch(slice.actions.showLoading());
@@ -56,11 +62,11 @@ export async function addArticle(data: IArticle) {
       return null;
     }
   };
-}
+};
 
-export function editArticle() {}
+function editArticle() {}
 
-export function deleteArticle() {}
+function deleteArticle() {}
 
 const persistConfig = {
   key: "articles",
@@ -71,5 +77,11 @@ const persistConfig = {
 
 const { reset } = slice.actions;
 
-export { getArticles, reset as resetArticles };
+export {
+  reset as resetArticles,
+  editArticle,
+  deleteArticle,
+  addArticle,
+  getArticlesList,
+};
 export default persistReducer(persistConfig, slice.reducer);

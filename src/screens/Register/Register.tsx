@@ -33,6 +33,7 @@ const Register = () => {
     }
     try {
       register(data);
+
       history.push("/list");
     } catch {
       notification["error"]({

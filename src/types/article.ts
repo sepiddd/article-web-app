@@ -4,6 +4,7 @@ export type IArticle = {
   date: string;
   id?: string;
   image?: string;
+  userId: string;
 };
 
 export type IArticleMode = "create" | "edit" | "read";

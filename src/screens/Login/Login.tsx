@@ -1,8 +1,6 @@
 import { Input, Button, Form, notification } from "antd";
 import { useHistory } from "react-router";
-// import { useForm } from "react-hook-form";
-
-import { useAuth } from "../../hooks";
+import { useArticle, useAuth } from "../../hooks";
 import { PATH_APP } from "../../routes/paths";
 
 const layout = {
@@ -14,8 +12,8 @@ const tailLayout = {
 };
 
 const Login = () => {
-  const { loading, login, isAuthenticated } = useAuth();
-
+  const { loading, login, isAuthenticated, user } = useAuth();
+  const { getArticlesList } = useArticle();
   const history = useHistory();
 
   if (isAuthenticated) {
@@ -29,6 +27,7 @@ const Login = () => {
 
     try {
       login(values.email, values.password);
+      getArticlesList(user.id);
       history.push("/list");
     } catch {
       notification["error"]({
