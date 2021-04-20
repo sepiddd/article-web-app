@@ -17,12 +17,13 @@ const List = () => {
 
   return (
     <div>
-      <div
+      <Space
         style={{
-          display: "flex",
-          alignItems: "center",
+          marginBottom: 16,
           justifyContent: "space-between",
-        }}>
+          width: "100%",
+        }}
+        align='center'>
         <h2>List</h2>
         <Button
           onClick={() =>
@@ -34,7 +35,7 @@ const List = () => {
           type='primary'>
           Add Article
         </Button>
-      </div>
+      </Space>
       <Table dataSource={articlesList}>
         <Column width={150} title='Date' dataIndex='date' key='date' />
 
