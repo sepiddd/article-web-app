@@ -61,6 +61,16 @@ const slice = createSlice({
       state.articleItem = action.payload;
       state.loading = false;
     },
+    resetItem(state) {
+      state.articleItem = {
+        id: "",
+        title: "",
+        content: null,
+        date: "",
+        image: "",
+        userId: "",
+      };
+    },
   },
   extraReducers: {
     [getArticlesList.fulfilled as any]: (state, action) => {
@@ -86,30 +96,6 @@ const addArticle = async (data: IArticle) => {
   };
 };
 
-// const getArticle = async (id: any) => {
-//   return async (dispatch: Dispatch<any>) => {
-//     try {
-//       const data = await articleAccess.get(id);
-//       dispatch(slice.actions.getItem(data));
-//       return data;
-//     } catch {
-//       dispatch(slice.actions.hideLoading());
-//       return null;
-//     }
-//   };
-//   // return async (dispatch: Dispatch<any>) => {
-//   //   try {
-//   //     dispatch(slice.actions.showLoading());
-//   //     articleAccess.get(id).then((res) => {
-//   //       dispatch(slice.actions.getItem(res));
-//   //     });
-//   //   } catch (e) {
-//   //     dispatch(slice.actions.hideLoading());
-//   //     return null;
-//   //   }
-//   // };
-// };
-
 function deleteArticle() {}
 
 const persistConfig = {
@@ -119,10 +105,11 @@ const persistConfig = {
   whitelist: ["articlesList", "articleItem"],
 };
 
-const { reset } = slice.actions;
+const { reset, resetItem } = slice.actions;
 
 export {
   reset as resetArticles,
+  resetItem,
   getArticleById,
   deleteArticle,
   addArticle,

@@ -5,6 +5,7 @@ import {
   addArticle,
   getArticleById,
   getArticlesList,
+  resetItem,
 } from "../redux/slices/article";
 import { IArticle } from "../types";
 
@@ -16,10 +17,7 @@ function useArticle() {
 
   useEffect(() => {
     return () => {
-      dispatch({
-        type: "articles/getArticleById/fulfilled",
-        payload: undefined,
-      });
+      dispatch(resetItem());
     };
   }, []);
 
