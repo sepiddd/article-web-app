@@ -46,7 +46,7 @@ export class DataAccess<T> implements IDataAccess<T> {
     return this.requestHandler(request);
   }
 
-  async get(key: string) {
+  async get(key: any) {
     const db = await this.connection;
     const request = db
       .transaction([this.storeName], "readonly")

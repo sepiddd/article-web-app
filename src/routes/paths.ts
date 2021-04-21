@@ -15,6 +15,8 @@ export const PATH_AUTH = {
 
 export const PATH_APP = {
   root: ROOTS.app,
-  list: path(ROOTS.app, "/list"),
-  addArticle: path(ROOTS.app, "/article"),
+  articles: path(ROOTS.app, "/articles"),
+  edit: path(ROOTS.app, "/articles/:id/edit"),
+  show: path(ROOTS.app, "/articles/:id"),
+  add: path(ROOTS.app, "/articles/add"),
 };

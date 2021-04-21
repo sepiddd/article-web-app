@@ -128,7 +128,7 @@ const Register = () => {
         />
 
         <Form.Item {...tailLayout}>
-          <Button type='primary' htmlType='submit'>
+          <Button type='primary' htmlType='submit' shape='round'>
             Register
           </Button>
         </Form.Item>

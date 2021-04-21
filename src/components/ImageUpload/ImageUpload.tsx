@@ -49,10 +49,17 @@ const ImageUpload: React.FC<Props> = ({ setBase64, resetForm }: Props) => {
   }, [resetForm]);
 
   return (
-    <Space>
-      {imagePreview === "" ? <></> : <Image width={200} src={imagePreview} />}
+    <Space style={{ width: "100%", justifyContent: "space-between" }}>
+      {imagePreview === "" ? (
+        <span>No images ulpoaded yet!</span>
+      ) : (
+        <Image width={200} src={imagePreview} />
+      )}
 
-      <Button onChange={() => {}}>
+      <Button
+        onChange={() => {}}
+        shape='round'
+        style={{ alignSelf: "flex-end" }}>
         Uplaod Image
         <input
           type='file'

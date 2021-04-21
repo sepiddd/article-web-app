@@ -6,9 +6,9 @@ import * as yup from "yup";
 import { ErrorMessage } from "@hookform/error-message";
 import { useArticle, useAuth } from "../../hooks";
 import { DraftEditor, ImageUpload } from "..";
-import { IArticleMode } from "../../types";
 import { PATH_APP } from "../../routes/paths";
-import { useHistory } from "react-router";
+import { useHistory, useLocation } from "react-router-dom";
+import { IArticleMode } from "../../types";
 
 const schema = yup.object().shape({
   title: yup.string().required().min(3).max(150),
@@ -20,10 +20,11 @@ interface Props {
   mode: IArticleMode;
 }
 
-const ArticleForm: React.FC<Props> = ({ mode }: Props) => {
+const ArticleForm = ({ mode }: Props) => {
   const { addArticle } = useArticle();
   const { user } = useAuth();
   const history = useHistory();
+  const location = useLocation();
 
   const {
     control,
@@ -49,7 +50,7 @@ const ArticleForm: React.FC<Props> = ({ mode }: Props) => {
         userId: user.id,
       });
       reset();
-      history.push(PATH_APP.list);
+      history.push(PATH_APP.articles);
     } catch (error) {}
   };
 
@@ -85,9 +86,9 @@ const ArticleForm: React.FC<Props> = ({ mode }: Props) => {
           <Form.Item>
             <DraftEditor
               text={field.value}
-              mode={mode}
               setContent={field.onChange}
               resetForm={isSubmitSuccessful}
+              mode={mode}
             />
             <ErrorMessage
               errors={errors}
@@ -121,7 +122,7 @@ const ArticleForm: React.FC<Props> = ({ mode }: Props) => {
         }}
       />
       <Form.Item></Form.Item>
-      <Button htmlType='submit' type='primary'>
+      <Button htmlType='submit' type='primary' shape='round'>
         Add article
       </Button>
     </Form>

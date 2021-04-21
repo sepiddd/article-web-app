@@ -6,14 +6,14 @@ import {
   Switch,
   Route,
 } from "react-router-dom";
-
 import "./App.scss";
 import "antd/dist/antd.css";
-import { store } from "./redux/store";
+import { persistor, store } from "./redux/store";
 import { Fragment, lazy, Suspense } from "react";
 import { AuthGuard, Loading } from "./components";
 import { PATH_APP, PATH_AUTH } from "./routes/paths";
 import Layout from "./Layout";
+import { PersistGate } from "redux-persist/integration/react";
 
 const queryClient = new QueryClient();
 
@@ -48,13 +48,22 @@ const routes = [
     routes: [
       {
         exact: true,
-        path: PATH_APP.list,
-        component: lazy(() => import("./screens/List")),
+        path: PATH_APP.show,
+        component: lazy(() => import("./screens/Article")),
       },
       {
-        // exact: true,
-        path: PATH_APP.addArticle,
-        component: lazy(() => import("./screens/Article")),
+        path: PATH_APP.edit,
+        component: lazy(() => import("./screens/Edit")),
+      },
+      {
+        exact: true,
+        path: PATH_APP.add,
+        component: lazy(() => import("./screens/Add")),
+      },
+      {
+        exact: true,
+        path: PATH_APP.articles,
+        component: lazy(() => import("./screens/List")),
       },
     ],
   },
@@ -100,9 +109,11 @@ function renderRoutes(routes: Array<any> = []) {
 function App() {
   return (
     <Provider store={store}>
-      <QueryClientProvider client={queryClient}>
-        <Router>{renderRoutes(routes)}</Router>
-      </QueryClientProvider>
+      <PersistGate loading={null} persistor={persistor}>
+        <QueryClientProvider client={queryClient}>
+          <Router>{renderRoutes(routes)}</Router>
+        </QueryClientProvider>
+      </PersistGate>
     </Provider>
   );
 }
