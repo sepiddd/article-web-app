@@ -1,24 +1,24 @@
 import { useEffect, useState } from "react";
 import { Button, Image, Space } from "antd";
+import { IArticleMode } from "../../types";
 
 interface Props {
   setBase64: (data: any) => void;
   resetForm?: boolean;
   base64?: string;
-  readonly?: boolean;
+  mode: IArticleMode;
 }
 
 const ImageUpload: React.FC<Props> = ({
   setBase64,
   resetForm,
   base64,
-  readonly,
+  mode,
 }: Props) => {
   const [file, setFile] = useState<string>("");
-  const [imagePreview, setImagePreview] = useState<any>(base64);
+  const [imagePreview, setImagePreview] = useState<any>("");
   const [name, setName] = useState<string>();
   const [size, setSize] = useState<string>();
-  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const _handleReaderLoaded = (readerEvt: any) => {
     let binaryString = readerEvt.target.result;
@@ -41,6 +41,12 @@ const ImageUpload: React.FC<Props> = ({
     }
   };
 
+  useEffect(() => {
+    if (base64) {
+      setImagePreview(base64);
+    }
+  }, [base64]);
+
   const reset = () => {
     setFile("");
     setImagePreview("");
@@ -57,18 +63,18 @@ const ImageUpload: React.FC<Props> = ({
 
   return (
     <Space style={{ width: "100%", justifyContent: "space-between" }}>
-      {imagePreview === "" ? (
+      {!imagePreview ? (
         <span>No images ulpoaded yet!</span>
       ) : (
-        <Image width={200} src={base64 ? base64 : imagePreview} />
+        <Image width={200} src={imagePreview} />
       )}
 
-      {!readonly && (
+      {mode !== "read" && (
         <Button
           onChange={() => {}}
           shape='round'
           style={{ alignSelf: "flex-end" }}>
-          Uplaod Image
+          {base64 ? "Change Image" : "Uplaod Image"}
           <input
             type='file'
             id='file'

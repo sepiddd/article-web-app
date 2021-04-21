@@ -125,7 +125,7 @@ const ArticleForm = ({ mode }: Props) => {
                 setBase64={field.onChange}
                 resetForm={isSubmitSuccessful}
                 base64={src}
-                readonly={mode === "read"}
+                mode={mode}
               />
               <ErrorMessage
                 errors={errors}
