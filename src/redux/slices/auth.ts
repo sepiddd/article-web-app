@@ -2,7 +2,6 @@ import { createSlice, Dispatch } from "@reduxjs/toolkit";
 import { persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import { User } from "../../types";
-import { DataAccess } from "../../utils/DataAccess";
 import { notification } from "antd";
 import { DB_CONNECTION } from "../../constants/db";
 import { UserAccess } from "../../utils/UserAccess";

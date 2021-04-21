@@ -6,9 +6,10 @@ import * as yup from "yup";
 import { ErrorMessage } from "@hookform/error-message";
 import { useArticle, useAuth } from "../../hooks";
 import { DraftEditor, ImageUpload } from "..";
-import { IArticleMode } from "../../types";
 import { PATH_APP } from "../../routes/paths";
-import { useHistory } from "react-router";
+import { useHistory } from "react-router-dom";
+import { IArticleMode } from "../../types";
+import { useEffect, useState } from "react";
 
 const schema = yup.object().shape({
   title: yup.string().required().min(3).max(150),
@@ -20,19 +21,28 @@ interface Props {
   mode: IArticleMode;
 }
 
-const ArticleForm: React.FC<Props> = ({ mode }: Props) => {
-  const { addArticle } = useArticle();
+const ArticleForm = ({ mode }: Props) => {
+  const { addArticle, articleItem, updateArticle } = useArticle();
   const { user } = useAuth();
   const history = useHistory();
+  const [src, setSrc] = useState<any>();
 
   const {
     control,
     handleSubmit,
     reset,
+    setValue,
     formState: { errors, isSubmitSuccessful },
   } = useForm({
     resolver: yupResolver(schema),
   });
+
+  useEffect(() => {
+    setValue("title", articleItem.title || "");
+    setValue("content", articleItem.content || "");
+    setValue("image", articleItem.image || "");
+    setSrc(articleItem.image);
+  }, [articleItem, setValue]);
 
   const onSubmit = async (data: {
     content: any;
@@ -40,16 +50,24 @@ const ArticleForm: React.FC<Props> = ({ mode }: Props) => {
     image: string;
   }) => {
     try {
-      await addArticle({
-        title: data.title,
-        content: data.content,
-        // date: new Date().toISOString().slice(0, 10),
-        date: new Date().toISOString().slice(0, 10),
-        image: data.image,
-        userId: user.id,
-      });
+      mode === "add"
+        ? await addArticle({
+            title: data.title,
+            content: data.content,
+            date: new Date().toISOString().slice(0, 10),
+            image: data.image,
+            userId: user.id,
+          })
+        : await updateArticle({
+            title: data.title,
+            content: data.content,
+            date: articleItem.date,
+            image: data.image,
+            userId: user.id,
+            id: articleItem.id,
+          });
       reset();
-      history.push(PATH_APP.list);
+      history.push(PATH_APP.articles);
     } catch (error) {}
   };
 
@@ -58,7 +76,6 @@ const ArticleForm: React.FC<Props> = ({ mode }: Props) => {
       <Controller
         name='title'
         control={control}
-        defaultValue=''
         render={({ field }) => (
           <Form.Item>
             <Input
@@ -80,14 +97,13 @@ const ArticleForm: React.FC<Props> = ({ mode }: Props) => {
       <Controller
         name='content'
         control={control}
-        defaultValue=''
         render={({ field }) => (
           <Form.Item>
             <DraftEditor
               text={field.value}
-              mode={mode}
               setContent={field.onChange}
               resetForm={isSubmitSuccessful}
+              mode={mode}
             />
             <ErrorMessage
               errors={errors}
@@ -102,13 +118,14 @@ const ArticleForm: React.FC<Props> = ({ mode }: Props) => {
       <Controller
         name='image'
         control={control}
-        defaultValue=''
         render={({ field }) => {
           return (
             <Form.Item>
               <ImageUpload
                 setBase64={field.onChange}
                 resetForm={isSubmitSuccessful}
+                base64={src}
+                mode={mode}
               />
               <ErrorMessage
                 errors={errors}
@@ -120,10 +137,15 @@ const ArticleForm: React.FC<Props> = ({ mode }: Props) => {
           );
         }}
       />
-      <Form.Item></Form.Item>
-      <Button htmlType='submit' type='primary'>
-        Add article
-      </Button>
+      <Form.Item>
+        <Button htmlType='submit' type='primary' shape='round'>
+          {mode === "add" ? "Add article" : "Apply changes"}
+        </Button>
+
+        <Button type='link' onClick={history.goBack} style={{ marginLeft: 16 }}>
+          cancel
+        </Button>
+      </Form.Item>
     </Form>
   );
 };

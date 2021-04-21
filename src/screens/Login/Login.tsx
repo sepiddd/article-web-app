@@ -5,11 +5,11 @@ import { Link } from "react-router-dom";
 import { PATH_APP, PATH_AUTH } from "../../routes/paths";
 
 const layout = {
-  labelCol: { span: 8 },
-  wrapperCol: { span: 16 },
+  labelCol: { span: 24 },
+  wrapperCol: { span: 24 },
 };
 const tailLayout = {
-  wrapperCol: { offset: 8, span: 16 },
+  wrapperCol: { offset: 24, span: 24 },
 };
 
 const Login = () => {
@@ -18,7 +18,7 @@ const Login = () => {
   const history = useHistory();
 
   if (isAuthenticated) {
-    history.push(PATH_APP.list);
+    history.push(PATH_APP.articles);
   }
 
   const handleSubmit = (values: { email: string; password: string }) => {
@@ -58,8 +58,8 @@ const Login = () => {
           <Input.Password />
         </Form.Item>
 
-        <Form.Item {...tailLayout}>
-          <Button type='primary' htmlType='submit'>
+        <Form.Item>
+          <Button type='primary' htmlType='submit' shape='round'>
             Login
           </Button>
         </Form.Item>
