@@ -28,7 +28,7 @@ const DraftEditor: React.FC<Props> = ({
   const [editorState, setEditorState] = useState(() =>
     EditorState.createEmpty()
   );
-  const [isTextSet, setIsTextSet] = useState(mode === "create");
+  const [isTextSet, setIsTextSet] = useState(mode === "add");
 
   useEffect(() => {
     const newState = !!text && convertFromRaw(JSON.parse(text));

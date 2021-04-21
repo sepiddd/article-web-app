@@ -40,6 +40,14 @@ const getArticleById = createAsyncThunk(
   }
 );
 
+const updateArticle = createAsyncThunk(
+  "articles/updateArticle",
+  async (item: IArticle) => {
+    const response = await articleAccess.update(item);
+    return response;
+  }
+);
+
 const slice = createSlice({
   name: "articles",
   initialState,
@@ -62,14 +70,7 @@ const slice = createSlice({
       state.loading = false;
     },
     resetItem(state) {
-      state.articleItem = {
-        id: "",
-        title: "",
-        content: null,
-        date: "",
-        image: "",
-        userId: "",
-      };
+      state.articleItem = initialState.articleItem;
     },
   },
   extraReducers: {
@@ -77,6 +78,10 @@ const slice = createSlice({
       state.articlesList = action.payload;
     },
     [getArticleById.fulfilled as any]: (state, action) => {
+      state.articleItem = action.payload;
+    },
+    [updateArticle.fulfilled as any]: (state, action) => {
+      console.log("action.payload", action);
       state.articleItem = action.payload;
     },
   },
@@ -114,5 +119,6 @@ export {
   deleteArticle,
   addArticle,
   getArticlesList,
+  updateArticle,
 };
 export default persistReducer(persistConfig, slice.reducer);

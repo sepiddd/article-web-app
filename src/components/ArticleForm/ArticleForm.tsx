@@ -7,8 +7,9 @@ import { ErrorMessage } from "@hookform/error-message";
 import { useArticle, useAuth } from "../../hooks";
 import { DraftEditor, ImageUpload } from "..";
 import { PATH_APP } from "../../routes/paths";
-import { useHistory, useLocation } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { IArticleMode } from "../../types";
+import { useEffect, useState } from "react";
 
 const schema = yup.object().shape({
   title: yup.string().required().min(3).max(150),
@@ -21,19 +22,27 @@ interface Props {
 }
 
 const ArticleForm = ({ mode }: Props) => {
-  const { addArticle } = useArticle();
+  const { addArticle, articleItem, updateArticle } = useArticle();
   const { user } = useAuth();
   const history = useHistory();
-  const location = useLocation();
+  const [src, setSrc] = useState<any>();
 
   const {
     control,
     handleSubmit,
     reset,
+    setValue,
     formState: { errors, isSubmitSuccessful },
   } = useForm({
     resolver: yupResolver(schema),
   });
+
+  useEffect(() => {
+    setValue("title", articleItem.title || "");
+    setValue("content", articleItem.content || "");
+    setValue("image", articleItem.image || "");
+    setSrc(articleItem.image);
+  }, [articleItem, setValue]);
 
   const onSubmit = async (data: {
     content: any;
@@ -41,14 +50,22 @@ const ArticleForm = ({ mode }: Props) => {
     image: string;
   }) => {
     try {
-      await addArticle({
-        title: data.title,
-        content: data.content,
-        // date: new Date().toISOString().slice(0, 10),
-        date: new Date().toISOString().slice(0, 10),
-        image: data.image,
-        userId: user.id,
-      });
+      mode === "add"
+        ? await addArticle({
+            title: data.title,
+            content: data.content,
+            date: new Date().toISOString().slice(0, 10),
+            image: data.image,
+            userId: user.id,
+          })
+        : await updateArticle({
+            title: data.title,
+            content: data.content,
+            date: articleItem.date,
+            image: data.image,
+            userId: user.id,
+            id: articleItem.id,
+          });
       reset();
       history.push(PATH_APP.articles);
     } catch (error) {}
@@ -59,7 +76,6 @@ const ArticleForm = ({ mode }: Props) => {
       <Controller
         name='title'
         control={control}
-        defaultValue=''
         render={({ field }) => (
           <Form.Item>
             <Input
@@ -81,7 +97,6 @@ const ArticleForm = ({ mode }: Props) => {
       <Controller
         name='content'
         control={control}
-        defaultValue=''
         render={({ field }) => (
           <Form.Item>
             <DraftEditor
@@ -103,13 +118,14 @@ const ArticleForm = ({ mode }: Props) => {
       <Controller
         name='image'
         control={control}
-        defaultValue=''
         render={({ field }) => {
           return (
             <Form.Item>
               <ImageUpload
                 setBase64={field.onChange}
                 resetForm={isSubmitSuccessful}
+                base64={src}
+                readonly={mode === "read"}
               />
               <ErrorMessage
                 errors={errors}
@@ -121,10 +137,15 @@ const ArticleForm = ({ mode }: Props) => {
           );
         }}
       />
-      <Form.Item></Form.Item>
-      <Button htmlType='submit' type='primary' shape='round'>
-        Add article
-      </Button>
+      <Form.Item>
+        <Button htmlType='submit' type='primary' shape='round'>
+          {mode === "add" ? "Add article" : "Apply changes"}
+        </Button>
+
+        <Button type='link' onClick={history.goBack} style={{ marginLeft: 16 }}>
+          cancel
+        </Button>
+      </Form.Item>
     </Form>
   );
 };

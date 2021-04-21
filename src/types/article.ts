@@ -7,4 +7,4 @@ export type IArticle = {
   userId: string;
 };
 
-export type IArticleMode = "create" | "edit" | "read";
+export type IArticleMode = "add" | "edit" | "read";

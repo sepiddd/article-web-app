@@ -4,7 +4,7 @@ const Add = () => {
   return (
     <div>
       <h2>Add article</h2>
-      <ArticleForm mode='create' />
+      <ArticleForm mode='add' />
     </div>
   );
 };

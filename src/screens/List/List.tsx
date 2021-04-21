@@ -1,13 +1,12 @@
 import { Button, Table, Space } from "antd";
 import { useEffect } from "react";
-import { useHistory, Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useArticle, useAuth } from "../../hooks";
 import { PATH_APP } from "../../routes/paths";
 
 const { Column } = Table;
 
 const List = () => {
-  const history = useHistory();
   const { user } = useAuth();
   const { articlesList, getArticlesList } = useArticle();
 
@@ -25,17 +24,7 @@ const List = () => {
         }}
         align='center'>
         <h2>List</h2>
-        <Button
-          shape='round'
-          onClick={() =>
-            history.push({
-              pathname: PATH_APP.add,
-              search: "?mode=create",
-            })
-          }
-          type='primary'>
-          Add Article
-        </Button>
+        <Link to={PATH_APP.add}>Add Article</Link>
       </Space>
       <Table dataSource={articlesList}>
         <Column width={150} title='Date' dataIndex='date' key='date' />
@@ -48,15 +37,6 @@ const List = () => {
           key='action'
           render={(data) => (
             <Space size='middle'>
-              {/* <Button
-                onClick={() =>
-                  history.push({
-                    pathname: PATH_APP.edit,
-                  })
-                }
-                type='link'>
-                Edit
-              </Button> */}
               <Link to={`${PATH_APP.articles}/${data.id}/edit`}>Edit</Link>
               <Button type='link' danger>
                 Delete

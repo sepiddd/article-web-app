@@ -6,6 +6,7 @@ import {
   getArticleById,
   getArticlesList,
   resetItem,
+  updateArticle,
 } from "../redux/slices/article";
 import { IArticle } from "../types";
 
@@ -31,6 +32,9 @@ function useArticle() {
     },
     getArticle: async (id: any) => {
       dispatch(await getArticleById(id));
+    },
+    updateArticle: async (item: IArticle) => {
+      dispatch(await updateArticle(item));
     },
   };
 }

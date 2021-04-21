@@ -48,22 +48,22 @@ const routes = [
     routes: [
       {
         exact: true,
-        path: PATH_APP.show,
-        component: lazy(() => import("./screens/Article")),
-      },
-      {
-        path: PATH_APP.edit,
-        component: lazy(() => import("./screens/Edit")),
-      },
-      {
-        exact: true,
         path: PATH_APP.add,
         component: lazy(() => import("./screens/Add")),
       },
       {
         exact: true,
+        path: PATH_APP.show,
+        component: lazy(() => import("./screens/Article")),
+      },
+      {
+        exact: true,
         path: PATH_APP.articles,
         component: lazy(() => import("./screens/List")),
+      },
+      {
+        path: PATH_APP.edit,
+        component: lazy(() => import("./screens/Edit")),
       },
     ],
   },
