@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Button, Image, Space } from "antd";
+import { Button, Image, message, Space } from "antd";
 import { IArticleMode } from "../../types";
 
 interface Props {
@@ -15,10 +15,7 @@ const ImageUpload: React.FC<Props> = ({
   base64,
   mode,
 }: Props) => {
-  const [file, setFile] = useState<string>("");
   const [imagePreview, setImagePreview] = useState<any>("");
-  const [name, setName] = useState<string>();
-  const [size, setSize] = useState<string>();
 
   const _handleReaderLoaded = (readerEvt: any) => {
     let binaryString = readerEvt.target.result;
@@ -29,13 +26,14 @@ const ImageUpload: React.FC<Props> = ({
     e.preventDefault();
     const reader = new FileReader();
     const file = e.target.files[0];
+    if (file.size > 4194304) {
+      message.error("the image size is larger than 4MB.");
+      return false;
+    }
     reader.readAsDataURL(file);
     if (reader !== undefined && file !== undefined) {
       reader.onload = _handleReaderLoaded;
       reader.onloadend = () => {
-        setFile(file);
-        setSize(file.size);
-        setName(file.name);
         setImagePreview(reader.result);
       };
     }
@@ -48,11 +46,8 @@ const ImageUpload: React.FC<Props> = ({
   }, [base64]);
 
   const reset = () => {
-    setFile("");
-    setImagePreview("");
     setBase64("");
-    setName("");
-    setSize("");
+    setImagePreview("");
   };
 
   useEffect(() => {
@@ -70,26 +65,39 @@ const ImageUpload: React.FC<Props> = ({
       )}
 
       {mode !== "read" && (
-        <Button
-          onChange={() => {}}
-          shape='round'
-          style={{ alignSelf: "flex-end" }}>
-          {base64 ? "Change Image" : "Uplaod Image"}
-          <input
-            type='file'
-            id='file'
-            accept='.jpeg, .png, .jpg'
-            onChange={photoUpload}
-            src={imagePreview}
-            style={{
-              opacity: 0,
-              position: "absolute",
-              left: 0,
-              right: 0,
-              bottom: 0,
-            }}
-          />
-        </Button>
+        <div>
+          {imagePreview && (
+            <Button
+              style={{ marginRight: 10 }}
+              onClick={reset}
+              shape='round'
+              danger
+              type='primary'>
+              Remove Image
+            </Button>
+          )}
+
+          <Button
+            onChange={() => {}}
+            shape='round'
+            style={{ alignSelf: "flex-end" }}>
+            {imagePreview ? "Change Image" : "Uplaod Image"}
+            <input
+              type='file'
+              id='file'
+              accept='.jpeg, .png, .jpg'
+              onChange={photoUpload}
+              src={imagePreview}
+              style={{
+                opacity: 0,
+                position: "absolute",
+                left: 0,
+                right: 0,
+                bottom: 0,
+              }}
+            />
+          </Button>
+        </div>
       )}
     </Space>
   );
