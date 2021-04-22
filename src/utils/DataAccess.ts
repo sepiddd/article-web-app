@@ -56,12 +56,12 @@ export class DataAccess<T> implements IDataAccess<T> {
     return this.requestHandler(request);
   }
 
-  async remove(uid: string) {
+  async remove(id: string) {
     const db = await this.connection;
     const request = db
       .transaction([this.storeName], "readwrite")
       .objectStore(this.storeName)
-      .delete(uid);
+      .delete(id);
 
     return this.requestHandler(request);
   }

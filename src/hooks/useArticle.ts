@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../redux/rootReducer";
 import {
   addArticle,
+  deleteArticle,
   getArticleById,
   getArticlesList,
   resetItem,
@@ -27,14 +28,17 @@ function useArticle() {
     addArticle: async (data: IArticle) => {
       dispatch(await addArticle(data));
     },
-    getArticlesList: async (uid: string) => {
-      dispatch(await getArticlesList(uid));
+    getArticlesList: async () => {
+      dispatch(await getArticlesList());
     },
     getArticle: async (id: any) => {
       dispatch(await getArticleById(id));
     },
     updateArticle: async (item: IArticle) => {
       dispatch(await updateArticle(item));
+    },
+    deleteArticle: async (id: string) => {
+      dispatch(await deleteArticle(id));
     },
   };
 }

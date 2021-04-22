@@ -1,18 +1,31 @@
-import { Button, Table, Space } from "antd";
+import { Button, Table, Space, Modal } from "antd";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useArticle, useAuth } from "../../hooks";
 import { PATH_APP } from "../../routes/paths";
 
 const { Column } = Table;
+const { confirm } = Modal;
 
 const List = () => {
-  const { user } = useAuth();
-  const { articlesList, getArticlesList } = useArticle();
+  const { articlesList, getArticlesList, deleteArticle } = useArticle();
 
   useEffect(() => {
-    getArticlesList(user.id);
+    getArticlesList();
   }, []);
+
+  const handleDelete = (title: string, id: string) => {
+    confirm({
+      title: "Delete Article",
+      content: `Are you sure to delete "${title}" article?`,
+      async onOk() {
+        await deleteArticle(id).then();
+      },
+      onCancel() {
+        Modal.destroyAll();
+      },
+    });
+  };
 
   return (
     <div>
@@ -38,7 +51,10 @@ const List = () => {
           render={(data) => (
             <Space size='middle'>
               <Link to={`${PATH_APP.articles}/${data.id}/edit`}>Edit</Link>
-              <Button type='link' danger>
+              <Button
+                type='link'
+                danger
+                onClick={() => handleDelete(data.title, data.id)}>
                 Delete
               </Button>
             </Space>
