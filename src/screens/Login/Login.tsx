@@ -28,7 +28,7 @@ const Login = () => {
 
     try {
       login(values.email, values.password);
-      getArticlesList(user.id);
+      getArticlesList();
       history.push("/list");
     } catch {
       notification["error"]({
