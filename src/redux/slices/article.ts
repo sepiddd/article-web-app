@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice, Dispatch } from "@reduxjs/toolkit";
+import { message } from "antd";
 import { persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import { DB_CONNECTION } from "../../constants/db";
@@ -23,8 +24,6 @@ const initialState: {
   },
 };
 
-// const { user } = store.getState();
-
 const articleAccess = new ArticleAccess(DB_CONNECTION, "articles");
 
 const getArticlesList = createAsyncThunk("articles/getList", async () => {
@@ -47,6 +46,7 @@ const updateArticle = createAsyncThunk(
   "articles/updateArticle",
   async (item: IArticle) => {
     const response = await articleAccess.update(item);
+    message.success("the article was updated successfully!");
     return response;
   }
 );
@@ -54,9 +54,9 @@ const updateArticle = createAsyncThunk(
 const deleteArticle = createAsyncThunk(
   "articles/deleteArticle",
   async (id: string) => {
-    const response = await articleAccess.remove(id);
-    getArticlesList();
-    return response;
+    await articleAccess.remove(id);
+    message.success("the article was deleted successfully!");
+    return id;
   }
 );
 
@@ -96,7 +96,9 @@ const slice = createSlice({
       state.articleItem = action.payload;
     },
     [deleteArticle.fulfilled as any]: (state, action) => {
-      // state.articlesList = action.payload;
+      state.articlesList = state.articlesList.filter(
+        (item) => item.id !== action.payload
+      );
     },
   },
 });
@@ -106,9 +108,11 @@ const addArticle = async (data: IArticle) => {
     try {
       dispatch(slice.actions.showLoading());
       articleAccess.add(data).then((res) => {
+        message.success("the article was created successfully!");
         return res;
       });
     } catch (e) {
+      message.error("There is a problem!");
       dispatch(slice.actions.hideLoading());
       return null;
     }
