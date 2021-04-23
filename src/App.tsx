@@ -6,14 +6,16 @@ import {
   Switch,
   Route,
 } from "react-router-dom";
-import "./App.scss";
-import "antd/dist/antd.css";
+
 import { persistor, store } from "./redux/store";
 import { Fragment, lazy, Suspense } from "react";
 import { AuthGuard, Loading } from "./components";
 import { PATH_APP, PATH_AUTH } from "./routes/paths";
 import Layout from "./Layout";
 import { PersistGate } from "redux-persist/integration/react";
+
+import "antd/dist/antd.css";
+import "draft-js/dist/Draft.css";
 
 const queryClient = new QueryClient();
 

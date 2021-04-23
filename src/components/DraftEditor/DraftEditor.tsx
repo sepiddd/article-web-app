@@ -5,9 +5,7 @@ import {
   convertToRaw,
   convertFromRaw,
 } from "draft-js";
-import "draft-js/dist/Draft.css";
 import { useEffect, useState } from "react";
-import "./styles.scss";
 import { IArticleMode } from "../../types";
 
 const compositeDecorator = (isPreview: boolean) => new CompositeDecorator([]);
