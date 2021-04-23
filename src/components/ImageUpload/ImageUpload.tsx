@@ -59,15 +59,16 @@ const ImageUpload: React.FC<Props> = ({
   return (
     <Space style={{ width: "100%", justifyContent: "space-between" }}>
       {!imagePreview ? (
-        <span>No images ulpoaded yet!</span>
+        <span data-testid='no-image'>No images ulpoaded yet!</span>
       ) : (
-        <Image width={200} src={imagePreview} />
+        <Image data-testid='uploaded-image' width={200} src={imagePreview} />
       )}
 
       {mode !== "read" && (
         <div>
           {imagePreview && (
             <Button
+              data-testid='remove-img'
               style={{ marginRight: 10 }}
               onClick={reset}
               shape='round'
@@ -78,6 +79,7 @@ const ImageUpload: React.FC<Props> = ({
           )}
 
           <Button
+            data-testid='upload-img'
             onChange={() => {}}
             shape='round'
             style={{ alignSelf: "flex-end" }}>
