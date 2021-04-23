@@ -2,45 +2,6 @@ import { render, unmountComponentAtNode } from "react-dom";
 import { act } from "react-dom/test-utils";
 import ImageUpload from "./ImageUpload";
 
-// const img = "";
-
-// describe("ArticleForm component", () => {
-//   test("Matches the snapshot", () => {
-//     const readMode = create(
-//       <ImageUpload setBase64={() => console.log("readMode")} mode='read' />
-//     );
-//     const addMode = create(
-//       <ImageUpload setBase64={() => console.log("addMode")} mode='add' />
-//     );
-//     const editMode = create(
-//       <ImageUpload setBase64={() => console.log("editMode")} mode='edit' />
-//     );
-
-//     const editModeWithBase64 = create(
-//       <ImageUpload
-//         setBase64={() => console.log("editMode")}
-//         mode='edit'
-//         base64={img}
-//       />
-//     );
-
-//     const editModeWithResetForm = create(
-//       <ImageUpload
-//         setBase64={() => console.log("editMode")}
-//         mode='edit'
-//         base64={img}
-//         resetForm
-//       />
-//     );
-
-//     expect(readMode.toJSON()).toMatchSnapshot();
-//     expect(addMode.toJSON()).toMatchSnapshot();
-//     expect(editMode.toJSON()).toMatchSnapshot();
-//     expect(editModeWithBase64.toJSON()).toMatchSnapshot();
-//     expect(editModeWithResetForm.toJSON()).toMatchSnapshot();
-//   });
-// });
-
 let container: any = null;
 beforeEach(() => {
   // setup a DOM element as a render target
@@ -55,9 +16,22 @@ afterEach(() => {
   container = null;
 });
 
-// mode==="edit"
+// mode==="add"
+it("Should render the component in add mode", () => {
+  const setBase64 = jest.fn();
 
-it("Image Upload edit mode Without image", () => {
+  act(() => {
+    render(<ImageUpload setBase64={setBase64} mode='add' />, container);
+  });
+
+  expect(container.querySelector("[data-testid='remove-img']")).toBe(null);
+  expect(container.querySelector("[data-testid='no-image']").textContent).toBe(
+    "No images ulpoaded yet!"
+  );
+});
+
+// mode==="edit"
+it("Should render the component in edit mode without any image", () => {
   const fakeData = {
     base64: "",
     setBase64: () => {},
@@ -81,15 +55,13 @@ it("Image Upload edit mode Without image", () => {
   expect(container.querySelector("[data-testid='no-image']").textContent).toBe(
     "No images ulpoaded yet!"
   );
-  expect(setBase64).toHaveBeenCalledTimes(0);
 });
 
-it("Image Upload edit mode With image", () => {
+it("Should render the component in edit mode with an image", () => {
   const fakeData = {
-    base64: "x.image",
+    base64: "fakeImage",
     setBase64: () => {},
   };
-  const setBase64 = jest.fn();
 
   act(() => {
     render(
@@ -109,21 +81,42 @@ it("Image Upload edit mode With image", () => {
   expect(
     container.querySelector("[data-testid='upload-img']").textContent
   ).toBe("Change Image");
-  expect(setBase64).toHaveBeenCalledTimes(0);
+  expect(
+    container.querySelector("[data-testid='remove-img']").textContent
+  ).toBe("Remove Image");
 });
 
 // mode==="read"
 
-it("Image Upload read mode a image", () => {
+it("Should render the component in readonly", () => {
+  const fakeData = {
+    base64: "fakeImage",
+    setBase64: () => {},
+  };
+  act(() => {
+    render(
+      <ImageUpload setBase64={() => {}} mode='read' base64={fakeData.base64} />,
+      container
+    );
+  });
+  expect(container.querySelector("[data-testid='upload-actions']")).toBe(null);
+  expect(
+    container
+      .querySelector("[data-testid='uploaded-image']")
+      .querySelector("img")
+      .getAttribute("src")
+  ).toBe(fakeData.base64);
+});
+
+it("should not render the component", () => {
   act(() => {
     render(
       <ImageUpload setBase64={() => {}} mode='read' base64='' />,
       container
     );
   });
-  expect(container.querySelector("[data-testid='remove-img']")).toBe(null);
-  expect(container.querySelector("[data-testid='no-image']").textContent).toBe(
-    "No images ulpoaded yet!"
+  expect(container.querySelector("[data-testid='upload-actions']")).toBe(null);
+  expect(container.querySelector("[data-testid='upload-image-wrap']")).toBe(
+    null
   );
-  expect(container.querySelector("[data-testid='upload-img']")).toBe(null);
 });

@@ -56,8 +56,12 @@ const ImageUpload: React.FC<Props> = ({
     }
   }, [resetForm]);
 
-  return (
-    <Space style={{ width: "100%", justifyContent: "space-between" }}>
+  return mode === "read" && !base64 ? (
+    <></>
+  ) : (
+    <Space
+      style={{ width: "100%", justifyContent: "space-between" }}
+      data-testid='upload-image-wrap'>
       {!imagePreview ? (
         <span data-testid='no-image'>No images ulpoaded yet!</span>
       ) : (
@@ -65,7 +69,7 @@ const ImageUpload: React.FC<Props> = ({
       )}
 
       {mode !== "read" && (
-        <div>
+        <div data-testid='upload-actions'>
           {imagePreview && (
             <Button
               data-testid='remove-img'
@@ -85,6 +89,7 @@ const ImageUpload: React.FC<Props> = ({
             style={{ alignSelf: "flex-end" }}>
             {imagePreview ? "Change Image" : "Uplaod Image"}
             <input
+              data-testid='upload-img-input'
               type='file'
               id='file'
               accept='.jpeg, .png, .jpg'
