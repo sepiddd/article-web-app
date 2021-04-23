@@ -62,6 +62,7 @@ const DraftEditor: React.FC<Props> = ({
       editorState={editorState}
       onChange={editorOnChange}
       placeholder='Content...'
+      readOnly={mode === "read"}
     />
   );
 };

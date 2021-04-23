@@ -12,7 +12,7 @@ const rootPersistConfig = {
 
 const rootReducer = combineReducers({
   auth: authReducer,
-  article: articleReducer,
+  articles: articleReducer,
 });
 
 export { rootPersistConfig, rootReducer };
