@@ -29,7 +29,7 @@ const Login = () => {
     try {
       login(values.email, values.password);
       getArticlesList();
-      history.push("/list");
+      history.push(PATH_APP.articles);
     } catch {
       notification["error"]({
         message: "An error occured",
