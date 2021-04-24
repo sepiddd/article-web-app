@@ -4,8 +4,6 @@ import "./index.scss";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 
-import "draft-js-static-toolbar-plugin/lib/plugin.css";
-
 /**I have to disable React.StrictMode due to the issue on antd with React 17 */
 
 ReactDOM.render(
