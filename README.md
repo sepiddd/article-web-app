@@ -52,3 +52,25 @@ You will also see any lint errors in the console.
 ## `yarn run test:watch`
 
 **Inorder to run the test, you can use this command**
+
+# Used Technologies
+
+## `React`
+
+## `Redux`
+In order to handle global states
+
+## `React Hook form`
+In order to handle forms
+
+## `Ant design`
+In order to developing User Interface
+
+## `Draft js`
+In order to handle text editor
+
+## `Yup`
+In order to validating schemas
+
+## `React router dom`
+In order to handle website's routings
