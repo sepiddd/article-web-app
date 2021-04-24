@@ -18,7 +18,7 @@ const routes = [
   {
     exact: true,
     path: "/404",
-    component: lazy(() => import("./screens/Login")),
+    component: lazy(() => import("./screens/NotFound")),
   },
   // Auth Routes
   {
@@ -63,6 +63,9 @@ const routes = [
         component: lazy(() => import("./screens/Edit")),
       },
     ],
+  },
+  {
+    component: lazy(() => import("./screens/NotFound")),
   },
 ];
 
