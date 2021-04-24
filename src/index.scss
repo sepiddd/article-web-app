@@ -12,6 +12,11 @@ code {
     monospace;
 }
 
+.error-message {
+  color: #ff4d4f;
+  font-size: 12px;
+}
+
 .draft-editor {
   &--editable {
     .DraftEditor-root {

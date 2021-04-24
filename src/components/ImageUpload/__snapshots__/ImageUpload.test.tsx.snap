@@ -1,0 +1,278 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ArticleForm component Matches the snapshot 1`] = `
+<div
+  className="ant-space ant-space-horizontal ant-space-align-center"
+  style={
+    Object {
+      "justifyContent": "space-between",
+      "width": "100%",
+    }
+  }
+>
+  <div
+    className="ant-space-item"
+    style={Object {}}
+  >
+    <span>
+      No images ulpoaded yet!
+    </span>
+  </div>
+</div>
+`;
+
+exports[`ArticleForm component Matches the snapshot 2`] = `
+<div
+  className="ant-space ant-space-horizontal ant-space-align-center"
+  style={
+    Object {
+      "justifyContent": "space-between",
+      "width": "100%",
+    }
+  }
+>
+  <div
+    className="ant-space-item"
+    style={
+      Object {
+        "marginRight": 8,
+      }
+    }
+  >
+    <span>
+      No images ulpoaded yet!
+    </span>
+  </div>
+  <div
+    className="ant-space-item"
+    style={Object {}}
+  >
+    <div>
+      
+      <button
+        className="ant-btn ant-btn-round"
+        onChange={[Function]}
+        onClick={[Function]}
+        style={
+          Object {
+            "alignSelf": "flex-end",
+          }
+        }
+        type="button"
+      >
+        <span>
+          Uplaod Image
+        </span>
+        <input
+          accept=".jpeg, .png, .jpg"
+          id="file"
+          onChange={[Function]}
+          src=""
+          style={
+            Object {
+              "bottom": 0,
+              "left": 0,
+              "opacity": 0,
+              "position": "absolute",
+              "right": 0,
+            }
+          }
+          type="file"
+        />
+      </button>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`ArticleForm component Matches the snapshot 3`] = `
+<div
+  className="ant-space ant-space-horizontal ant-space-align-center"
+  style={
+    Object {
+      "justifyContent": "space-between",
+      "width": "100%",
+    }
+  }
+>
+  <div
+    className="ant-space-item"
+    style={
+      Object {
+        "marginRight": 8,
+      }
+    }
+  >
+    <span>
+      No images ulpoaded yet!
+    </span>
+  </div>
+  <div
+    className="ant-space-item"
+    style={Object {}}
+  >
+    <div>
+      
+      <button
+        className="ant-btn ant-btn-round"
+        onChange={[Function]}
+        onClick={[Function]}
+        style={
+          Object {
+            "alignSelf": "flex-end",
+          }
+        }
+        type="button"
+      >
+        <span>
+          Uplaod Image
+        </span>
+        <input
+          accept=".jpeg, .png, .jpg"
+          id="file"
+          onChange={[Function]}
+          src=""
+          style={
+            Object {
+              "bottom": 0,
+              "left": 0,
+              "opacity": 0,
+              "position": "absolute",
+              "right": 0,
+            }
+          }
+          type="file"
+        />
+      </button>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`ArticleForm component Matches the snapshot 4`] = `
+<div
+  className="ant-space ant-space-horizontal ant-space-align-center"
+  style={
+    Object {
+      "justifyContent": "space-between",
+      "width": "100%",
+    }
+  }
+>
+  <div
+    className="ant-space-item"
+    style={
+      Object {
+        "marginRight": 8,
+      }
+    }
+  >
+    <span>
+      No images ulpoaded yet!
+    </span>
+  </div>
+  <div
+    className="ant-space-item"
+    style={Object {}}
+  >
+    <div>
+      
+      <button
+        className="ant-btn ant-btn-round"
+        onChange={[Function]}
+        onClick={[Function]}
+        style={
+          Object {
+            "alignSelf": "flex-end",
+          }
+        }
+        type="button"
+      >
+        <span>
+          Uplaod Image
+        </span>
+        <input
+          accept=".jpeg, .png, .jpg"
+          id="file"
+          onChange={[Function]}
+          src=""
+          style={
+            Object {
+              "bottom": 0,
+              "left": 0,
+              "opacity": 0,
+              "position": "absolute",
+              "right": 0,
+            }
+          }
+          type="file"
+        />
+      </button>
+    </div>
+  </div>
+</div>
+`;
+
+exports[`ArticleForm component Matches the snapshot 5`] = `
+<div
+  className="ant-space ant-space-horizontal ant-space-align-center"
+  style={
+    Object {
+      "justifyContent": "space-between",
+      "width": "100%",
+    }
+  }
+>
+  <div
+    className="ant-space-item"
+    style={
+      Object {
+        "marginRight": 8,
+      }
+    }
+  >
+    <span>
+      No images ulpoaded yet!
+    </span>
+  </div>
+  <div
+    className="ant-space-item"
+    style={Object {}}
+  >
+    <div>
+      
+      <button
+        className="ant-btn ant-btn-round"
+        onChange={[Function]}
+        onClick={[Function]}
+        style={
+          Object {
+            "alignSelf": "flex-end",
+          }
+        }
+        type="button"
+      >
+        <span>
+          Uplaod Image
+        </span>
+        <input
+          accept=".jpeg, .png, .jpg"
+          id="file"
+          onChange={[Function]}
+          src=""
+          style={
+            Object {
+              "bottom": 0,
+              "left": 0,
+              "opacity": 0,
+              "position": "absolute",
+              "right": 0,
+            }
+          }
+          type="file"
+        />
+      </button>
+    </div>
+  </div>
+</div>
+`;
