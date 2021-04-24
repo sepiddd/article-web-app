@@ -20,7 +20,6 @@ const routes = [
     path: "/404",
     component: lazy(() => import("./screens/NotFound")),
   },
-  // Auth Routes
   {
     path: PATH_AUTH.root,
     layout: Layout,
@@ -64,9 +63,6 @@ const routes = [
       },
     ],
   },
-  {
-    component: lazy(() => import("./screens/NotFound")),
-  },
 ];
 
 function RouteProgress(props: RouteProps) {
@@ -102,6 +98,7 @@ function renderRoutes(routes: Array<any> = []) {
             />
           );
         })}
+        <Redirect from='*' to='/404' />
       </Switch>
     </Suspense>
   );
