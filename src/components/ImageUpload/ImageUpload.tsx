@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Button, Image, message, Space } from "antd";
 import { IArticleMode } from "../../types";
 
@@ -45,16 +45,16 @@ const ImageUpload: React.FC<Props> = ({
     }
   }, [base64]);
 
-  const reset = () => {
+  const reset = useCallback(() => {
     setBase64("");
     setImagePreview("");
-  };
+  }, [setBase64]);
 
   useEffect(() => {
     if (resetForm) {
       reset();
     }
-  }, [resetForm]);
+  }, [reset, resetForm]);
 
   return mode === "read" && !base64 ? (
     <></>

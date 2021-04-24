@@ -9,7 +9,7 @@ const Edit = () => {
 
   useEffect(() => {
     getArticle(params.id);
-  }, []);
+  }, [getArticle, params.id]);
 
   return (
     <div>

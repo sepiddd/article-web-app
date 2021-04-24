@@ -14,7 +14,7 @@ const Article = () => {
 
   useEffect(() => {
     getArticle(params.id);
-  }, []);
+  }, [getArticle, params.id]);
 
   useEffect(() => {
     if (articleItem.title) {

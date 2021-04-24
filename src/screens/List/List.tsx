@@ -12,7 +12,7 @@ const List = () => {
 
   useEffect(() => {
     getArticlesList();
-  }, []);
+  }, [getArticlesList]);
 
   const handleDelete = (title: string, id: string) => {
     confirm({

@@ -10,7 +10,7 @@ const layout = {
 };
 
 const Login = () => {
-  const { loading, login, isAuthenticated, user } = useAuth();
+  const { loading, login, isAuthenticated } = useAuth();
   const { getArticlesList } = useArticle();
   const history = useHistory();
 

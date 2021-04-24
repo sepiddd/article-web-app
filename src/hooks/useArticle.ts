@@ -21,7 +21,7 @@ function useArticle() {
     return () => {
       dispatch(resetItem());
     };
-  }, []);
+  }, [dispatch]);
 
   return {
     ...articles,

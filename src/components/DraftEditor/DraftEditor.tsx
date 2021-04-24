@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import {
   Editor,
   EditorState,
@@ -29,6 +29,19 @@ const DraftEditor: React.FC<Props> = ({
   );
   const [isTextSet, setIsTextSet] = useState(mode === "add");
 
+  const editorOnChange = useCallback(
+    (currentEditorState: EditorState) => {
+      setEditorState(currentEditorState);
+
+      setContent?.(
+        currentEditorState.getCurrentContent().hasText() || mode === "edit"
+          ? JSON.stringify(convertToRaw(currentEditorState.getCurrentContent()))
+          : undefined
+      );
+    },
+    [mode, setContent]
+  );
+
   useEffect(() => {
     const newState = !!text && convertFromRaw(JSON.parse(text));
     if (!isTextSet && newState && newState?.hasText?.()) {
@@ -40,21 +53,11 @@ const DraftEditor: React.FC<Props> = ({
       );
       setIsTextSet(true);
     }
-  }, [isTextSet, mode, text]);
+  }, [editorOnChange, isTextSet, mode, text]);
 
   useEffect(() => {
     if (resetForm) setEditorState(EditorState.createEmpty());
   }, [resetForm]);
-
-  const editorOnChange = (currentEditorState: EditorState) => {
-    setEditorState(currentEditorState);
-
-    setContent?.(
-      currentEditorState.getCurrentContent().hasText() || mode === "edit"
-        ? JSON.stringify(convertToRaw(currentEditorState.getCurrentContent()))
-        : undefined
-    );
-  };
 
   return (
     <div
