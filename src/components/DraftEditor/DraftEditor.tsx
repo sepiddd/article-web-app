@@ -6,6 +6,7 @@ import {
   convertToRaw,
   convertFromRaw,
 } from "draft-js";
+import "draft-js/dist/Draft.css";
 
 import { IArticleMode } from "../../types";
 
