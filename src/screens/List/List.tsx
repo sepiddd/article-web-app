@@ -39,7 +39,7 @@ const List = () => {
         <h2>List</h2>
         <Link to={PATH_APP.add}>Add Article</Link>
       </Space>
-      <Table dataSource={articlesList}>
+      <Table dataSource={articlesList} rowKey='id' scroll={{ x: 700 }}>
         <Column width={150} title='Date' dataIndex='date' key='date' />
 
         <Column
@@ -54,6 +54,7 @@ const List = () => {
           width={150}
           title='Action'
           key='action'
+          fixed='right'
           render={(data) => (
             <Space size='middle'>
               <Link to={`${PATH_APP.articles}/${data.id}/edit`}>Edit</Link>

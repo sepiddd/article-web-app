@@ -3,9 +3,10 @@ import ReactDOM from "react-dom";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 
-import "./index.scss";
 import "antd/dist/antd.css";
 import "draft-js/dist/Draft.css";
+
+import "./index.scss";
 /**I have to disable React.StrictMode due to the issue on antd with React 17 */
 
 ReactDOM.render(

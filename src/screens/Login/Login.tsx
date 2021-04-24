@@ -8,9 +8,6 @@ const layout = {
   labelCol: { span: 24 },
   wrapperCol: { span: 24 },
 };
-const tailLayout = {
-  wrapperCol: { offset: 24, span: 24 },
-};
 
 const Login = () => {
   const { loading, login, isAuthenticated, user } = useAuth();
@@ -38,7 +35,7 @@ const Login = () => {
   };
 
   return (
-    <>
+    <div style={{ maxWidth: 400, marginLeft: "auto", marginRight: "auto" }}>
       <Form
         {...layout}
         name='login'
@@ -69,7 +66,7 @@ const Login = () => {
           Dont Have an acoount? <Link to={PATH_AUTH.register}>register</Link>
         </p>
       </Space>
-    </>
+    </div>
   );
 };
 
