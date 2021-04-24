@@ -25,11 +25,45 @@ it("Should render the component in add mode", () => {
   expect(container.textContent).toBe("Content...");
 });
 
-it("Should render the component in add modee", () => {
+it("Should render the component in add add with setContent", () => {
   const onChange = jest.fn();
   act(() => {
     render(<DraftEditor mode='add' setContent={onChange} />, container);
   });
 
-  expect(container.querySelector("[data-testid='remove-img']")).toBe(null);
+  expect(onChange).toHaveBeenCalledTimes(0);
+});
+
+it("Should render the component in edit mode with text and setContent", () => {
+  const onChange = jest.fn();
+
+  const fakeData = {
+    text: {
+      blocks: [
+        {
+          key: "97afb",
+          text:
+            "expect(item).not.toBeUndefined(); expect(item).not.toBeUndefined(); expect(item).not.toBeUndefined(); expect(item).not.toBeUndefined(); sdfsdf",
+          type: "unstyled",
+          depth: 0,
+          inlineStyleRanges: [],
+          entityRanges: [],
+          data: {},
+        },
+      ],
+      entityMap: {},
+    },
+  };
+  act(() => {
+    render(
+      <DraftEditor
+        mode='edit'
+        setContent={onChange}
+        text={JSON.stringify(fakeData.text)}
+      />,
+      container
+    );
+  });
+
+  expect(onChange).toHaveBeenCalledTimes(1);
 });

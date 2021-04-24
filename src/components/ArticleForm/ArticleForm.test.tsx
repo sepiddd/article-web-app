@@ -49,8 +49,8 @@ test("renders article form in edit mode", () => {
   expect(asFragment()).not.toBeUndefined();
 });
 
-test("renders article form in edit modeeee", () => {
-  const setBase64 = jest.fn();
-  const { asFragment } = renderItem("edit");
+test("renders article form in add mode", () => {
+  // const article = getArticle("1");
+  const { asFragment } = renderItem("add");
   expect(asFragment()).not.toBeUndefined();
 });
