@@ -54,7 +54,7 @@ const ArticleForm = ({ mode }: Props) => {
         ? await addArticle({
             title: data.title,
             content: data.content,
-            date: new Date().toISOString().slice(0, 10),
+            date: new Date().toDateString(),
             image: data.image,
             userId: user.id,
           })

@@ -1,7 +1,7 @@
 import { Button, Table, Space, Modal } from "antd";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
-import { useArticle, useAuth } from "../../hooks";
+import { useArticle } from "../../hooks";
 import { PATH_APP } from "../../routes/paths";
 
 const { Column } = Table;
@@ -42,7 +42,13 @@ const List = () => {
       <Table dataSource={articlesList}>
         <Column width={150} title='Date' dataIndex='date' key='date' />
 
-        <Column title='Title' dataIndex='title' key='title' />
+        <Column
+          title='Title'
+          key='title'
+          render={(data) => (
+            <Link to={`${PATH_APP.articles}/${data.id}`}>{data.title}</Link>
+          )}
+        />
 
         <Column
           width={150}
