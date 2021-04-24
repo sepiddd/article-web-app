@@ -14,9 +14,6 @@ import { PATH_APP, PATH_AUTH } from "./routes/paths";
 import Layout from "./Layout";
 import { PersistGate } from "redux-persist/integration/react";
 
-import "antd/dist/antd.css";
-import "draft-js/dist/Draft.css";
-
 const queryClient = new QueryClient();
 
 const routes = [

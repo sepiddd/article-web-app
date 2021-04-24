@@ -13,8 +13,8 @@ import { IArticle } from "../types";
 
 function useArticle() {
   const dispatch = useDispatch();
-  const article = useSelector<RootState, RootState["article"]>(
-    (state) => state.article
+  const articles = useSelector<RootState, RootState["articles"]>(
+    (state) => state.articles
   );
 
   useEffect(() => {
@@ -24,7 +24,7 @@ function useArticle() {
   }, []);
 
   return {
-    ...article,
+    ...articles,
     addArticle: async (data: IArticle) => {
       dispatch(await addArticle(data));
     },

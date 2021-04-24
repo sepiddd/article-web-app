@@ -10,10 +10,18 @@ const rootPersistConfig = {
   keyPrefix: "redux-",
 };
 
-const rootReducer = combineReducers({
+const appReducer = combineReducers({
   auth: authReducer,
-  article: articleReducer,
+  articles: articleReducer,
 });
+
+const rootReducer = (state: any, action: any) => {
+  if (action.type === "auth/reset") {
+    state = undefined;
+  }
+
+  return appReducer(state, action);
+};
 
 export { rootPersistConfig, rootReducer };
 export type RootState = ReturnType<typeof rootReducer>;

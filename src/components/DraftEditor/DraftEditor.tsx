@@ -1,3 +1,4 @@
+import React, { useEffect, useState } from "react";
 import {
   Editor,
   EditorState,
@@ -5,7 +6,7 @@ import {
   convertToRaw,
   convertFromRaw,
 } from "draft-js";
-import { useEffect, useState } from "react";
+
 import { IArticleMode } from "../../types";
 
 const compositeDecorator = (isPreview: boolean) => new CompositeDecorator([]);
@@ -56,11 +57,17 @@ const DraftEditor: React.FC<Props> = ({
   };
 
   return (
-    <Editor
-      editorState={editorState}
-      onChange={editorOnChange}
-      placeholder='Content...'
-    />
+    <div
+      className={`draft-editor ${
+        mode === "read" ? "draft-editor--readonly" : "draft-editor--editable"
+      }`}>
+      <Editor
+        editorState={editorState}
+        onChange={editorOnChange}
+        placeholder='Content...'
+        readOnly={mode === "read"}
+      />
+    </div>
   );
 };
 

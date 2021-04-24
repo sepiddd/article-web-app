@@ -3,7 +3,7 @@ import { useHistory } from "react-router";
 import { useAuth } from "../../hooks";
 import { User } from "../../types";
 import { Controller, useForm } from "react-hook-form";
-import { PATH_AUTH } from "../../routes/paths";
+import { PATH_APP, PATH_AUTH } from "../../routes/paths";
 import { Link } from "react-router-dom";
 
 const layout = {
@@ -27,7 +27,7 @@ const Register = () => {
     try {
       register(data);
 
-      history.push("/list");
+      history.push(PATH_APP.articles);
     } catch {
       notification["error"]({
         message: "An error occured",
