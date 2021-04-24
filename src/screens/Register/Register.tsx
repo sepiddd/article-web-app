@@ -7,11 +7,8 @@ import { PATH_APP, PATH_AUTH } from "../../routes/paths";
 import { Link } from "react-router-dom";
 
 const layout = {
-  labelCol: { span: 8 },
-  wrapperCol: { span: 16 },
-};
-const tailLayout = {
-  wrapperCol: { offset: 8, span: 16 },
+  labelCol: { span: 24 },
+  wrapperCol: { span: 24 },
 };
 
 const Register = () => {
@@ -36,7 +33,7 @@ const Register = () => {
   };
 
   return (
-    <>
+    <div style={{ maxWidth: 400, marginLeft: "auto", marginRight: "auto" }}>
       <Form {...layout} name='register' onFinish={handleSubmit(onSubmit)}>
         <Controller
           render={({ field }) => {
@@ -127,7 +124,7 @@ const Register = () => {
           control={control}
         />
 
-        <Form.Item {...tailLayout}>
+        <Form.Item style={{ display: "flex", justifyContent: "flex-end" }}>
           <Button type='primary' htmlType='submit' shape='round'>
             Register
           </Button>
@@ -138,7 +135,7 @@ const Register = () => {
           Already Have an acoount? <Link to={PATH_AUTH.login}>Login</Link>
         </p>
       </Space>
-    </>
+    </div>
   );
 };
 

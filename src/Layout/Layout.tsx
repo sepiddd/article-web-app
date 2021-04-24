@@ -11,17 +11,9 @@ const Layout = ({ children }: PropsWithChildren<unknown>) => {
   const { user, isAuthenticated, logout, loading } = useAuth();
 
   return (
-    <AntLayout style={{ minHeight: "100vh" }}>
-      <Header
-        style={{
-          position: "fixed",
-          zIndex: 1,
-          width: "100%",
-          color: "white",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-        }}>
+    <AntLayout
+      style={{ minHeight: "100vh", width: "100vw", overflowX: "hidden" }}>
+      <Header className='header'>
         <Title level={2} style={{ color: "white", marginBottom: 0 }}>
           {isAuthenticated
             ? `${user.firstName} ${user.lastName}`
@@ -30,6 +22,7 @@ const Layout = ({ children }: PropsWithChildren<unknown>) => {
 
         {isAuthenticated && (
           <Button
+            className='header__logout-btn'
             type='primary'
             shape='round'
             onClick={logout}
@@ -39,12 +32,16 @@ const Layout = ({ children }: PropsWithChildren<unknown>) => {
           </Button>
         )}
       </Header>
-      <Content
-        className='site-layout'
-        style={{ padding: "0 50px", marginTop: 64 }}>
+      <Content className='site-layout' style={{ padding: "0 15px" }}>
         <div
           className='site-layout-background'
-          style={{ padding: 24, minHeight: 380 }}>
+          style={{
+            padding: "24px 0",
+            minHeight: 380,
+            maxWidth: "900px",
+            marginLeft: "auto",
+            marginRight: "auto",
+          }}>
           {children}
         </div>
       </Content>
