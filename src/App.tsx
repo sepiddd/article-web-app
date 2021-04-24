@@ -4,6 +4,7 @@ import {
   RouteProps,
   Switch,
   Route,
+  Redirect,
 } from "react-router-dom";
 
 import { persistor, store } from "./redux/store";
@@ -73,6 +74,7 @@ function renderRoutes(routes: Array<any> = []) {
   return (
     <Suspense fallback={<Loading />}>
       <Switch>
+        <Redirect exact from='/' to={PATH_APP.articles} />
         {routes.map((route, i) => {
           const Component = route.component;
           const Guard = route.guard || Fragment;
