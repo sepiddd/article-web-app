@@ -1,5 +1,4 @@
 import { Provider } from "react-redux";
-import { QueryClient, QueryClientProvider } from "react-query";
 import {
   BrowserRouter as Router,
   RouteProps,
@@ -13,8 +12,6 @@ import { AuthGuard, Loading } from "./components";
 import { PATH_APP, PATH_AUTH } from "./routes/paths";
 import Layout from "./Layout";
 import { PersistGate } from "redux-persist/integration/react";
-
-const queryClient = new QueryClient();
 
 const routes = [
   {
@@ -109,9 +106,7 @@ function App() {
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
-        <QueryClientProvider client={queryClient}>
-          <Router>{renderRoutes(routes)}</Router>
-        </QueryClientProvider>
+        <Router>{renderRoutes(routes)}</Router>
       </PersistGate>
     </Provider>
   );
