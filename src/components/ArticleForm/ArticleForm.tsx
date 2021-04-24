@@ -38,10 +38,12 @@ const ArticleForm = ({ mode }: Props) => {
   });
 
   useEffect(() => {
-    setValue("title", articleItem.title || "");
-    setValue("content", articleItem.content || "");
-    setValue("image", articleItem.image || "");
-    setSrc(articleItem.image);
+    if (articleItem) {
+      setValue("title", articleItem.title || "");
+      setValue("content", articleItem.content || "");
+      setValue("image", articleItem.image || "");
+      setSrc(articleItem.image);
+    }
   }, [articleItem, setValue]);
 
   const onSubmit = async (data: {
@@ -101,7 +103,7 @@ const ArticleForm = ({ mode }: Props) => {
           <Form.Item>
             <DraftEditor
               text={field.value}
-              setContent={field.onChange}
+              setContent={field?.onChange}
               resetForm={isSubmitSuccessful}
               mode={mode}
             />
@@ -137,15 +139,25 @@ const ArticleForm = ({ mode }: Props) => {
           );
         }}
       />
-      <Form.Item>
-        <Button htmlType='submit' type='primary' shape='round'>
-          {mode === "add" ? "Add article" : "Apply changes"}
-        </Button>
+      {mode !== "read" && (
+        <Form.Item>
+          <Button
+            data-testid='submit-btn'
+            htmlType='submit'
+            type='primary'
+            shape='round'>
+            {mode === "add" ? "Add article" : "Apply changes"}
+          </Button>
 
-        <Button type='link' onClick={history.goBack} style={{ marginLeft: 16 }}>
-          cancel
-        </Button>
-      </Form.Item>
+          <Button
+            data-testid='cancel-btn'
+            type='link'
+            onClick={history?.goBack}
+            style={{ marginLeft: 16 }}>
+            cancel
+          </Button>
+        </Form.Item>
+      )}
     </Form>
   );
 };

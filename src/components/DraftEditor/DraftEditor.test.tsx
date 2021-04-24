@@ -22,6 +22,14 @@ it("Should render the component in add mode", () => {
     render(<DraftEditor mode='add' />, container);
   });
 
-  //   expect(container.querySelector("[data-testid='remove-img']")).toBe(null);
   expect(container.textContent).toBe("Content...");
+});
+
+it("Should render the component in add modee", () => {
+  const onChange = jest.fn();
+  act(() => {
+    render(<DraftEditor mode='add' setContent={onChange} />, container);
+  });
+
+  expect(container.querySelector("[data-testid='remove-img']")).toBe(null);
 });
