@@ -57,8 +57,14 @@ You will also see any lint errors in the console.
 
 ## `React`
 
+## `Typescript`
+
 ## `Redux`
 In order to handle global states
+
+## `Redux Toolkit`
+
+In order to efficient Redux development
 
 ## `React Hook form`
 In order to handle forms
