@@ -56,6 +56,10 @@ const ImageUpload: React.FC<Props> = ({
     }
   }, [reset, resetForm]);
 
+  useEffect(() => {
+    if (mode === "edit") setBase64(imagePreview);
+  }, [imagePreview, mode, setBase64]);
+
   return mode === "read" && !base64 ? (
     <></>
   ) : (
@@ -65,7 +69,12 @@ const ImageUpload: React.FC<Props> = ({
       {!imagePreview ? (
         <span data-testid='no-image'>No images ulpoaded yet!</span>
       ) : (
-        <Image data-testid='uploaded-image' width={200} src={imagePreview} />
+        <Image
+          loading='lazy'
+          data-testid='uploaded-image'
+          width={200}
+          src={imagePreview}
+        />
       )}
 
       {mode !== "read" && (

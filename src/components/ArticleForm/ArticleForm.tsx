@@ -120,24 +120,22 @@ const ArticleForm = ({ mode }: Props) => {
       <Controller
         name='image'
         control={control}
-        render={({ field }) => {
-          return (
-            <Form.Item>
-              <ImageUpload
-                setBase64={field.onChange}
-                resetForm={isSubmitSuccessful}
-                base64={src}
-                mode={mode}
-              />
-              <ErrorMessage
-                errors={errors}
-                name='image'
-                as={"p"}
-                className='error-message'
-              />
-            </Form.Item>
-          );
-        }}
+        render={({ field }) => (
+          <Form.Item>
+            <ImageUpload
+              setBase64={field.onChange}
+              resetForm={isSubmitSuccessful}
+              base64={src}
+              mode={mode}
+            />
+            <ErrorMessage
+              errors={errors}
+              name='image'
+              as={"p"}
+              className='error-message'
+            />
+          </Form.Item>
+        )}
       />
       {mode !== "read" && (
         <Form.Item>
